@@ -3,6 +3,7 @@ package backend.academy.view;
 import backend.academy.model.listener.ChooseThemeListener;
 import backend.academy.view.listener.ChosenThemeListener;
 import lombok.Setter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,7 +29,7 @@ public class ChoosingThemeMenu implements ChooseThemeListener {
             String input = in.nextLine();
             if (input.isEmpty()) {
                 chosenThemeListener.onChosenTheme(input);
-                return;
+                break;
             }
             try {
                 int number = Integer.parseInt(input);
@@ -37,10 +38,15 @@ public class ChoosingThemeMenu implements ChooseThemeListener {
                     continue;
                 }
                 chosenThemeListener.onChosenTheme(possibleThemes.get(number - 1));
-                return;
+                break;
             } catch (NumberFormatException e) {
                 System.out.print(NON_NUMERIC_VALUE_MSG);
             }
+        }
+        try {
+            ConsoleCleaningUtility.clearConsole();
+        } catch (IOException e) {
+            //TODO: handle exception
         }
     }
 }
