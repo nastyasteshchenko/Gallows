@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 class Dictionary {
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
+    private static final String DICTIONARY_FILE = "/dictionary.json";
 
     @JsonProperty("dictionary")
     private HashMap<String, HashMap<Difficulty, String[]>> dictionary;
@@ -16,6 +17,6 @@ class Dictionary {
     }
 
     static Dictionary loadDictionary() throws IOException {
-        return OBJECT_MAPPER.readValue(Dictionary.class.getResourceAsStream("/dictionary.json"), Dictionary.class);
+        return OBJECT_MAPPER.readValue(Dictionary.class.getResourceAsStream(DICTIONARY_FILE), Dictionary.class);
     }
 }
