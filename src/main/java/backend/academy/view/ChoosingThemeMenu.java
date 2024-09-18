@@ -28,8 +28,9 @@ public class ChoosingThemeMenu implements ChooseThemeListener {
         while (true) {
             String input = in.nextLine();
             if (input.isEmpty()) {
+                clearScreen();
                 chosenThemeListener.onChosenTheme(input);
-                break;
+                return;
             }
             try {
                 int number = Integer.parseInt(input);
@@ -37,12 +38,16 @@ public class ChoosingThemeMenu implements ChooseThemeListener {
                     System.out.print(OUT_OF_RANGE_MSG);
                     continue;
                 }
+                clearScreen();
                 chosenThemeListener.onChosenTheme(possibleThemes.get(number - 1));
-                break;
+                return;
             } catch (NumberFormatException e) {
                 System.out.print(NON_NUMERIC_VALUE_MSG);
             }
         }
+    }
+
+    private void clearScreen() {
         try {
             ConsoleCleaningUtility.clearConsole();
         } catch (IOException e) {
