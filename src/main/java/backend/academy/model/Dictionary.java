@@ -25,6 +25,10 @@ public class Dictionary {
         return dictionary.keySet().stream().toList();
     }
 
+    public String getRandomTheme() {
+        return getThemes().get((int) (Math.random() * dictionary.size()));
+    }
+
     public String getRandomWord(String theme, Difficulty difficulty) {
         List<String> possibleWords = dictionary.get(theme).get(difficulty);
         return possibleWords.get((int) (Math.random() * possibleWords.size()));
