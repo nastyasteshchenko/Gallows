@@ -20,4 +20,8 @@ class Dictionary {
     static Dictionary loadDictionary() throws IOException {
         return OBJECT_MAPPER.readValue(Dictionary.class.getResourceAsStream(DICTIONARY_FILE), Dictionary.class);
     }
+
+    List<String> getThemes() {
+        return dictionary.keySet().stream().toList();
+    }
 }
