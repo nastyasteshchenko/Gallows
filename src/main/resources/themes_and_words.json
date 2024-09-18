@@ -1,0 +1,70 @@
+{
+    "animal": {
+        "hard": [
+            "rhinoceros",
+            "chameleon",
+            "kangaroo"
+        ],
+        "medium": [
+            "giraffe",
+            "monkey",
+            "penguin"
+        ],
+        "easy": [
+            "cat",
+            "dog",
+            "bird"
+        ]
+    },
+    "food": {
+        "hard": [
+            "sushi",
+            "tortellini",
+            "croissant"
+        ],
+        "madium": [
+            "pizza",
+            "burger",
+            "sandwich"
+        ],
+        "easy": [
+            "apple",
+            "banana",
+            "orange"
+        ]
+    },
+    "activity": {
+        "hard": [
+            "jogging",
+            "swimming",
+            "biking"
+        ],
+        "medium": [
+            "hiking",
+            "cycling",
+            "running"
+        ],
+        "easy": [
+            "yoga",
+            "dancing",
+            "singing"
+        ]
+    },
+    "music": {
+        "hard": [
+            "classical",
+            "rock",
+            "pop"
+        ],
+        "medium": [
+            "jazz",
+            "country",
+            "blues"
+        ],
+        "easy": [
+            "rap",
+            "hip-hop",
+            "reggae"
+        ]
+    }
+}
