@@ -1,11 +1,9 @@
 package backend.academy.view;
 
 import backend.academy.model.listener.ChooseDifficultyListener;
-import backend.academy.view.listener.ChosenDifficultyListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-import lombok.Setter;
 
 public class ChoosingDifficultyMenu implements ChooseDifficultyListener {
 
@@ -15,12 +13,11 @@ public class ChoosingDifficultyMenu implements ChooseDifficultyListener {
     private final static String NON_NUMERIC_VALUE_MSG = "Non-numeric value entered. Try again: ";
     private final static String OUT_OF_RANGE_MSG = "Number out of range. Try again: ";
 
-    @Setter
-    private ChosenDifficultyListener chosenDifficultyListener;
     private final Scanner in = new Scanner(System.in);
 
     @Override
-    public void onChooseDifficulty(List<String> possibleDifficulties) {
+    public String onChooseDifficulty(List<String> possibleDifficulties) {
+        clearScreen();
         System.out.println(CHOOSE_DIFFICULTY_MSG);
         PrintingListUtility.printNumberedList(possibleDifficulties);
         System.out.print(ENTER_NUMBER_MSG);
@@ -28,9 +25,7 @@ public class ChoosingDifficultyMenu implements ChooseDifficultyListener {
         while (true) {
             String input = in.nextLine();
             if (input.isEmpty()) {
-                clearScreen();
-                chosenDifficultyListener.onChosenDifficulty(input);
-                return;
+                return input;
             }
             try {
                 int number = Integer.parseInt(input);
@@ -38,9 +33,7 @@ public class ChoosingDifficultyMenu implements ChooseDifficultyListener {
                     System.out.print(OUT_OF_RANGE_MSG);
                     continue;
                 }
-                clearScreen();
-                chosenDifficultyListener.onChosenDifficulty(possibleDifficulties.get(number - 1));
-                return;
+                return possibleDifficulties.get(number - 1);
             } catch (NumberFormatException e) {
                 System.out.print(NON_NUMERIC_VALUE_MSG);
             }

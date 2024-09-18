@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface ChooseDifficultyListener {
 
-    void onChooseDifficulty(List<String> possibleDifficulties);
+    String onChooseDifficulty(List<String> possibleDifficulties);
 }

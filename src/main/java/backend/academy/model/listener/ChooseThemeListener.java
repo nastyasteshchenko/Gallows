@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface ChooseThemeListener {
 
-    void onChooseTheme(List<String> possibleThemes);
+    String onChooseTheme(List<String> possibleThemes);
 }

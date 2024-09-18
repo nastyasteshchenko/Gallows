@@ -1,8 +1,6 @@
 package backend.academy.view;
 
 import backend.academy.model.listener.ChooseThemeListener;
-import backend.academy.view.listener.ChosenThemeListener;
-import lombok.Setter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -15,12 +13,11 @@ public class ChoosingThemeMenu implements ChooseThemeListener {
     private final static String NON_NUMERIC_VALUE_MSG = "Non-numeric value entered. Try again: ";
     private final static String OUT_OF_RANGE_MSG = "Number out of range. Try again: ";
 
-    @Setter
-    private ChosenThemeListener chosenThemeListener;
     private final Scanner in = new Scanner(System.in);
 
     @Override
-    public void onChooseTheme(List<String> possibleThemes) {
+    public String onChooseTheme(List<String> possibleThemes) {
+        clearScreen();
         System.out.println(CHOOSE_THEME_MSG);
         PrintingListUtility.printNumberedList(possibleThemes);
         System.out.print(ENTER_NUMBER_MSG);
@@ -28,9 +25,7 @@ public class ChoosingThemeMenu implements ChooseThemeListener {
         while (true) {
             String input = in.nextLine();
             if (input.isEmpty()) {
-                clearScreen();
-                chosenThemeListener.onChosenTheme(input);
-                return;
+                return input;
             }
             try {
                 int number = Integer.parseInt(input);
@@ -38,9 +33,7 @@ public class ChoosingThemeMenu implements ChooseThemeListener {
                     System.out.print(OUT_OF_RANGE_MSG);
                     continue;
                 }
-                clearScreen();
-                chosenThemeListener.onChosenTheme(possibleThemes.get(number - 1));
-                return;
+                return possibleThemes.get(number - 1);
             } catch (NumberFormatException e) {
                 System.out.print(NON_NUMERIC_VALUE_MSG);
             }
