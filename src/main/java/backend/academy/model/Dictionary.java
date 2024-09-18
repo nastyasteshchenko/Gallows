@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 class Dictionary {
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
     private static final String DICTIONARY_FILE = "/dictionary.json";
 
     @JsonProperty("dictionary")
-    private HashMap<String, HashMap<Difficulty, String[]>> dictionary;
+    private HashMap<String, HashMap<Difficulty, List<String>>> dictionary;
 
     private Dictionary() {
     }
