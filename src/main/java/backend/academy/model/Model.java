@@ -3,16 +3,22 @@ package backend.academy.model;
 import backend.academy.controller.listener.StartNewGameListener;
 import backend.academy.model.listener.ChooseDifficultyListener;
 import backend.academy.model.listener.ChooseThemeListener;
+import backend.academy.model.listener.DrawGameListener;
+import backend.academy.model.word.Word;
+import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
 import java.io.IOException;
 
-public class Model implements StartNewGameListener {
+public class Model implements StartNewGameListener, EnterLetterListener {
 
     @Setter
     private ChooseDifficultyListener chooseDifficultyListener;
     @Setter
     private ChooseThemeListener chooseThemeListener;
-    private GameConfig currentConfig;
+    @Setter
+    private DrawGameListener drawGameListener;
+    private GameState currentGameState;
+    private int attemptsLast;
     private Dictionary dictionary;
 
     @Override
@@ -23,14 +29,20 @@ public class Model implements StartNewGameListener {
                 String currentTheme = chooseTheme();
                 Difficulty currentDifficulty = chooseDifficulty();
                 String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
-                currentConfig = new GameConfig(currentDifficulty, currentTheme, currentWord);
+                System.out.println(currentWord);
+                currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
+                attemptsLast = currentDifficulty.attempts();
+                if (drawGameListener != null) {
+                    drawGameListener.onDrawGame(currentGameState.word().getLetters(), 0,
+                        attemptsLast, currentTheme);
+                }
             } catch (IOException e) {
                 //TODO: handle exception
             }
         }
     }
 
-    public Difficulty chooseDifficulty() {
+    private Difficulty chooseDifficulty() {
         if (chooseDifficultyListener != null) {
             String chosenDifficulty = chooseDifficultyListener.onChooseDifficulty(Difficulty.getAllDifficulties());
             return chosenDifficulty.isEmpty() ? Difficulty.getRandomDifficulty() :
@@ -45,5 +57,18 @@ public class Model implements StartNewGameListener {
             return chosenTheme.isEmpty() ? dictionary.getRandomTheme() : chosenTheme;
         }
         return null;
+    }
+
+    @Override
+    public void onEnterLetter(String letter) {
+        if (!currentGameState.word().guessLetter(letter)) {
+            attemptsLast--;
+        }
+        //TODO:
+        if (drawGameListener != null) {
+            drawGameListener.onDrawGame(currentGameState.word().getLetters(),
+                currentGameState.difficulty().attempts() - attemptsLast,
+                currentGameState.difficulty().attempts(), currentGameState.theme());
+        }
     }
 }

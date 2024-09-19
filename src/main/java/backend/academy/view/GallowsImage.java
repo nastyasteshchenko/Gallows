@@ -5,6 +5,15 @@ import lombok.Getter;
 @Getter
 public enum GallowsImage {
 
+    NO_GALLOWS("""
+
+
+
+
+
+
+        """),
+
     PART_OF_GALLOWS("""
            |
            |
@@ -88,5 +97,10 @@ public enum GallowsImage {
 
     GallowsImage(String image) {
         this.image = image;
+    }
+
+    public static GallowsImage getByMistakesAmountAndDifficulty(int mistakesAmount, int attempts) {
+        int imageIndex = mistakesAmount * (values().length + 1) / (attempts + 1);
+        return values()[imageIndex];
     }
 }
