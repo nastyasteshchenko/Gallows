@@ -20,6 +20,9 @@ public class Main {
         model.chooseDifficultyListener(choosingDifficultyMenu);
         model.drawGameListener(gameView);
         gameView.enterLetterListener(model);
+        model.gameWinListener(gameView);
+        model.gameLooseListener(gameView);
+        model.guessLetterListener(gameView);
         controller.startNewGame();
     }
 }

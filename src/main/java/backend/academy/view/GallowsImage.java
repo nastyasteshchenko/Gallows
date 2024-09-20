@@ -12,9 +12,11 @@ public enum GallowsImage {
 
 
 
+
         """),
 
     PART_OF_GALLOWS("""
+
            |
            |
            |
@@ -99,8 +101,8 @@ public enum GallowsImage {
         this.image = image;
     }
 
-    public static GallowsImage getByMistakesAmountAndDifficulty(int mistakesAmount, int attempts) {
-        int imageIndex = mistakesAmount * (values().length + 1) / (attempts + 1);
+    public static GallowsImage getByMistakesAmountAndDifficulty(int mistakesAmount, int totalAttempts) {
+        int imageIndex = mistakesAmount * (values().length + 1) / (totalAttempts + 1);
         return values()[imageIndex];
     }
 }

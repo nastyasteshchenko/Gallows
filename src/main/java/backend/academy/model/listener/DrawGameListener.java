@@ -1,8 +1,8 @@
 package backend.academy.model.listener;
 
-import java.util.List;
+import backend.academy.view.GameInfo;
 
 public interface DrawGameListener {
 
-    void onDrawGame(List<Character> wordLetters, int mistakes, int attempts, String theme);
+    void onDrawGame(GameInfo gameInfo);
 }

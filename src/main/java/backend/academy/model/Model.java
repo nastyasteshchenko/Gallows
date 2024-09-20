@@ -4,6 +4,9 @@ import backend.academy.controller.listener.StartNewGameListener;
 import backend.academy.model.listener.ChooseDifficultyListener;
 import backend.academy.model.listener.ChooseThemeListener;
 import backend.academy.model.listener.DrawGameListener;
+import backend.academy.model.listener.GameLooseListener;
+import backend.academy.model.listener.GameWinListener;
+import backend.academy.model.listener.GuessLetterListener;
 import backend.academy.model.word.Word;
 import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
@@ -17,8 +20,14 @@ public class Model implements StartNewGameListener, EnterLetterListener {
     private ChooseThemeListener chooseThemeListener;
     @Setter
     private DrawGameListener drawGameListener;
+    @Setter
+    private GameWinListener gameWinListener;
+    @Setter
+    private GameLooseListener gameLooseListener;
+    @Setter
+    private GuessLetterListener guessLetterListener;
+
     private GameState currentGameState;
-    private int attemptsLast;
     private Dictionary dictionary;
 
     @Override
@@ -31,10 +40,11 @@ public class Model implements StartNewGameListener, EnterLetterListener {
                 String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
                 System.out.println(currentWord);
                 currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
-                attemptsLast = currentDifficulty.attempts();
                 if (drawGameListener != null) {
-                    drawGameListener.onDrawGame(currentGameState.word().getLetters(), 0,
-                        attemptsLast, currentTheme);
+                    drawGameListener.onDrawGame(currentGameState.getGameInfo());
+                    if (guessLetterListener != null) {
+                        guessLetterListener.onGuessLetter();
+                    }
                 }
             } catch (IOException e) {
                 //TODO: handle exception
@@ -61,14 +71,24 @@ public class Model implements StartNewGameListener, EnterLetterListener {
 
     @Override
     public void onEnterLetter(String letter) {
-        if (!currentGameState.word().guessLetter(letter)) {
-            attemptsLast--;
-        }
-        //TODO:
+        currentGameState.guessLetter(letter);
         if (drawGameListener != null) {
-            drawGameListener.onDrawGame(currentGameState.word().getLetters(),
-                currentGameState.difficulty().attempts() - attemptsLast,
-                currentGameState.difficulty().attempts(), currentGameState.theme());
+            drawGameListener.onDrawGame(currentGameState.getGameInfo());
+        }
+        if (currentGameState.isLoose()) {
+            if (gameLooseListener != null) {
+                gameLooseListener.onGameLoose(currentGameState.word().getWord());
+            }
+            return;
+        }
+        if (currentGameState.isWin()) {
+            if (gameWinListener != null) {
+                gameWinListener.onGameWin();
+            }
+            return;
+        }
+        if (guessLetterListener != null) {
+            guessLetterListener.onGuessLetter();
         }
     }
 }

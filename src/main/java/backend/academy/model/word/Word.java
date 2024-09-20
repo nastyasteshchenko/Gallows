@@ -2,12 +2,14 @@ package backend.academy.model.word;
 
 import lombok.Getter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Word {
 
     @Getter
     private int guessedLettersAmount = 0;
+    private final StringBuilder stringBuilder = new StringBuilder();
     private final List<Letter> letters = new ArrayList<>();
 
     public Word(String word) {
@@ -16,8 +18,18 @@ public class Word {
         }
     }
 
-    public List<Character> getLetters() {
-        return letters.stream().map(l -> l.isGuessed() ? l.letter() : '_').toList();
+    public String getWord() {
+        return Arrays.toString(letters.stream().map(Letter::letter).toArray());
+    }
+
+    @Override
+    public String toString() {
+        stringBuilder.setLength(0);
+        List<Character> characters = letters.stream().map(l -> l.isGuessed() ? l.letter() : '_').toList();
+        for (Character c : characters) {
+            stringBuilder.append(c).append(" ");
+        }
+        return stringBuilder.toString();
     }
 
     public boolean isGuessed() {
