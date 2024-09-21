@@ -21,7 +21,6 @@ class Alphabet {
         for (char freeLetter : freeLetters) {
             stringBuilder.append(freeLetter).append(" ");
         }
-        stringBuilder.append(System.lineSeparator());
         return stringBuilder.toString();
     }
 
