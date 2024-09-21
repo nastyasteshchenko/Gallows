@@ -9,9 +9,10 @@ public class Word {
     @Getter
     private int guessedLettersAmount = 0;
     private final StringBuilder stringBuilder = new StringBuilder();
-    private final List<Letter> letters = new ArrayList<>();
+    private final List<Letter> letters;
 
     public Word(String word) {
+        letters = new ArrayList<>(word.length());
         for (int i = 0; i < word.length(); i++) {
             letters.add(new Letter(word.charAt(i)));
         }
@@ -26,8 +27,8 @@ public class Word {
     public String toString() {
         stringBuilder.setLength(0);
         List<Character> characters = letters.stream().map(l -> l.isGuessed() ? l.letter() : '_').toList();
-        for (Character c : characters) {
-            stringBuilder.append(c).append(" ");
+        for (char c : characters) {
+            stringBuilder.append(c).append(' ');
         }
         return stringBuilder.toString();
     }

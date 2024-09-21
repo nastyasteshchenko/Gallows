@@ -2,6 +2,7 @@ package backend.academy.view;
 
 import backend.academy.model.listener.ChooseDifficultyListener;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +20,7 @@ class ChoosingDifficultyMenu implements ChooseDifficultyListener {
     private final static String MENU_CLOSED_MSG = "Choose theme menu was closed.";
 
     private final PrintStream out = System.out;
-    private final Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
 
     @Override
     public String onChooseDifficulty(List<String> possibleDifficulties) {

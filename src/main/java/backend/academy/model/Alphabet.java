@@ -19,7 +19,7 @@ class Alphabet {
     public String toString() {
         stringBuilder.setLength(0);
         for (char freeLetter : freeLetters) {
-            stringBuilder.append(freeLetter).append(" ");
+            stringBuilder.append(freeLetter).append(' ');
         }
         return stringBuilder.toString();
     }

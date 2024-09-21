@@ -1,6 +1,7 @@
 package backend.academy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 import lombok.Getter;
@@ -15,6 +16,7 @@ enum Difficulty {
     @JsonProperty("hard")
     HARD(4);
 
+    private static final SecureRandom RANDOM = new SecureRandom();
     private final int attempts;
 
     Difficulty(int attempts) {
@@ -30,6 +32,6 @@ enum Difficulty {
     }
 
     static Difficulty getRandomDifficulty() {
-        return Difficulty.values()[(int) (Math.random() * Difficulty.values().length)];
+        return Difficulty.values()[RANDOM.nextInt(Difficulty.values().length)];
     }
 }

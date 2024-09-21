@@ -10,6 +10,7 @@ import backend.academy.model.listener.NotInAlphabetListener;
 import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +34,7 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     private ContinueGameListener continueGameListener;
 
     private final PrintStream out = System.out;
-    private final Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in,  StandardCharsets.UTF_8);
     private final StringBuilder stringBuilder = new StringBuilder();
 
     @Override
