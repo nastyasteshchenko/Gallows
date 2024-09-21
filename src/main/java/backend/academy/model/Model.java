@@ -1,12 +1,14 @@
 package backend.academy.model;
 
 import backend.academy.controller.listener.StartNewGameListener;
+import backend.academy.model.listener.AlreadyUsedLetterListener;
 import backend.academy.model.listener.ChooseDifficultyListener;
 import backend.academy.model.listener.ChooseThemeListener;
 import backend.academy.model.listener.DrawGameListener;
 import backend.academy.model.listener.GameLooseListener;
 import backend.academy.model.listener.GameWinListener;
 import backend.academy.model.listener.GuessLetterListener;
+import backend.academy.model.listener.NotInAlphabetListener;
 import backend.academy.model.word.Word;
 import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
@@ -26,6 +28,10 @@ public class Model implements StartNewGameListener, EnterLetterListener {
     private GameLooseListener gameLooseListener;
     @Setter
     private GuessLetterListener guessLetterListener;
+    @Setter
+    private AlreadyUsedLetterListener alreadyUsedLetterListener;
+    @Setter
+    private NotInAlphabetListener notInAlphabetListener;
 
     private GameState currentGameState;
     private Dictionary dictionary;
@@ -71,6 +77,18 @@ public class Model implements StartNewGameListener, EnterLetterListener {
 
     @Override
     public void onEnterLetter(String letter) {
+        if (!currentGameState.isInAlphabet(letter)) {
+            if (notInAlphabetListener != null) {
+                notInAlphabetListener.onNotInAlphabet();
+            }
+            return;
+        }
+        if (currentGameState.isAlreadyUsed(letter)) {
+            if (alreadyUsedLetterListener != null) {
+                alreadyUsedLetterListener.onAlreadyUsedLetter();
+            }
+            return;
+        }
         currentGameState.guessLetter(letter);
         if (drawGameListener != null) {
             drawGameListener.onDrawGame(currentGameState.getGameInfo());

@@ -23,6 +23,8 @@ public class Main {
         model.gameWinListener(gameView);
         model.gameLooseListener(gameView);
         model.guessLetterListener(gameView);
+        model.alreadyUsedLetterListener(gameView);
+        model.notInAlphabetListener(gameView);
         controller.startNewGame();
     }
 }

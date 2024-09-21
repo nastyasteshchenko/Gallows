@@ -28,6 +28,14 @@ class GameState {
         return attemptsLeft == 0;
     }
 
+    boolean isAlreadyUsed(String letter) {
+        return alphabet.isAlreadyUsed(letter);
+    }
+
+    boolean isInAlphabet(String letter) {
+        return alphabet.isInAlphabet(letter);
+    }
+
     void guessLetter(String letter) {
         if (!word.guessLetter(letter)) {
             attemptsLeft--;
