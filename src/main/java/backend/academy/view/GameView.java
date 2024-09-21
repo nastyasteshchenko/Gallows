@@ -12,17 +12,19 @@ import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class GameView implements DrawGameListener, GameLooseListener, GameWinListener, GuessLetterListener,
-    AlreadyUsedLetterListener, NotInAlphabetListener, ErrorListener {
+        AlreadyUsedLetterListener, NotInAlphabetListener, ErrorListener {
 
     private static final Logger LOGGER = LogManager.getLogger(GameView.class);
 
     private static final String GAME_LOOSE_MSG = "You lost! The word was: ";
     private static final String GAME_WIN_MSG = "You won!";
     private static final String GAME_CONT_MSG =
-        "Would you like to play again? Press Enter to continue or any other key to exit.";
+            "Would you like to play again? Press Enter to continue or any other key to exit.";
     private static final String ALREADY_USED_LETTER_MSG = "You already used this letter. Try again.";
     private static final String NOT_IN_ALPHABET_MSG = "This letter is not in the alphabet. Try again.";
 
@@ -31,6 +33,7 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     @Setter
     private ContinueGameListener continueGameListener;
 
+    private final PrintStream out = System.out;
     private final Scanner in = new Scanner(System.in);
     private final StringBuilder stringBuilder = new StringBuilder();
 
@@ -39,42 +42,42 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
         stringBuilder.setLength(0);
         ConsoleCleaningUtility.clearConsole();
         stringBuilder.append("Theme: ").append(gameInfo.theme()).append(System.lineSeparator())
-            .append("Attempts left: ").append(gameInfo.attemptsLeft()).append(System.lineSeparator());
+                .append("Attempts left: ").append(gameInfo.attemptsLeft()).append(System.lineSeparator());
         GallowsImage gallowsImage =
-            GallowsImage.getByMistakesAmountAndDifficulty(
-                gameInfo.totalAttempts() - gameInfo.attemptsLeft(), gameInfo.totalAttempts());
+                GallowsImage.getByMistakesAmountAndDifficulty(
+                        gameInfo.totalAttempts() - gameInfo.attemptsLeft(), gameInfo.totalAttempts());
         LOGGER.debug("Gallows image: " + gallowsImage.name());
         stringBuilder.append(gallowsImage.image()).append(System.lineSeparator())
-            .append(gameInfo.wordLetters()).append(System.lineSeparator()).append(System.lineSeparator())
-            .append("Possible letters: ").append(gameInfo.alphabet()).append(System.lineSeparator());
-        System.out.println(stringBuilder);
+                .append(gameInfo.wordLetters()).append(System.lineSeparator()).append(System.lineSeparator())
+                .append("Possible letters: ").append(gameInfo.alphabet()).append(System.lineSeparator());
+        out.println(stringBuilder);
     }
 
     @Override
     public void onGameLoose(String word) {
-        System.out.println(GAME_LOOSE_MSG + word);
+        out.println(GAME_LOOSE_MSG + word);
         askIfContinue();
     }
 
     @Override
     public void onGameWin() {
-        System.out.println(GAME_WIN_MSG);
+        out.println(GAME_WIN_MSG);
         askIfContinue();
     }
 
     @Override
     public void onGuessLetter() {
         LOGGER.info("Guess letter menu was opened.");
-        System.out.print("Guess a letter: ");
+        out.print("Guess a letter: ");
         while (true) {
             String input = in.nextLine();
             LOGGER.debug("User entered:" + input);
             if (input.isEmpty()) {
-                System.out.print("Enter a letter: ");
+                out.print("Enter a letter: ");
                 continue;
             }
             if (input.length() > 1) {
-                System.out.print("Enter only one letter: ");
+                out.print("Enter only one letter: ");
                 continue;
             }
             LOGGER.info("Guess letter menu was closed.");
@@ -87,20 +90,20 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
 
     @Override
     public void onAlreadyUsedLetter() {
-        System.out.println(ALREADY_USED_LETTER_MSG);
+        out.println(ALREADY_USED_LETTER_MSG);
         onGuessLetter();
     }
 
     @Override
     public void onNotInAlphabet() {
-        System.out.println(NOT_IN_ALPHABET_MSG);
+        out.println(NOT_IN_ALPHABET_MSG);
         onGuessLetter();
     }
 
     private void askIfContinue() {
         LOGGER.info("Continue game menu was opened.");
-        System.out.println();
-        System.out.println(GAME_CONT_MSG);
+        out.println();
+        out.println(GAME_CONT_MSG);
         String input = in.nextLine();
         LOGGER.debug("User entered: " + input);
         LOGGER.info("Continue game menu was closed.");

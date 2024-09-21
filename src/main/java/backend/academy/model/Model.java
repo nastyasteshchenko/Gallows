@@ -16,6 +16,7 @@ import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 
 public class Model implements StartNewGameListener, EnterLetterListener, ContinueGameListener {
@@ -44,7 +45,8 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
     private GameState currentGameState;
     private Dictionary dictionary;
 
-    @Override public void onStartNewGame() {
+    @Override
+    public void onStartNewGame() {
         LOGGER.info("Starting new game.");
         try {
             if (dictionary == null) {
@@ -72,18 +74,7 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
 
     @Override
     public void onEnterLetter(String letter) {
-        if (!currentGameState.isInAlphabet(letter)) {
-            if (notInAlphabetListener != null) {
-                LOGGER.debug("Letter " + letter + " is not in the alphabet.");
-                notInAlphabetListener.onNotInAlphabet();
-            }
-            return;
-        }
-        if (currentGameState.isAlreadyUsed(letter)) {
-            if (alreadyUsedLetterListener != null) {
-                LOGGER.debug("Letter " + letter + " has already been used.");
-                alreadyUsedLetterListener.onAlreadyUsedLetter();
-            }
+        if (checkIfWrongLetter(letter)) {
             return;
         }
         currentGameState.guessLetter(letter);
@@ -109,6 +100,24 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
         }
     }
 
+    private boolean checkIfWrongLetter(String letter) {
+        if (!currentGameState.isInAlphabet(letter)) {
+            if (notInAlphabetListener != null) {
+                LOGGER.debug("Letter " + letter + " is not in the alphabet.");
+                notInAlphabetListener.onNotInAlphabet();
+            }
+            return true;
+        }
+        if (currentGameState.isAlreadyUsed(letter)) {
+            if (alreadyUsedLetterListener != null) {
+                LOGGER.debug("Letter " + letter + " has already been used.");
+                alreadyUsedLetterListener.onAlreadyUsedLetter();
+            }
+            return true;
+        }
+        return false;
+    }
+
     private void buildCurrentGameState() {
         String currentTheme = chooseTheme();
         Difficulty currentDifficulty = chooseDifficulty();
@@ -117,8 +126,8 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
         }
         String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
         LOGGER.debug("Current difficulty: " + currentDifficulty + System.lineSeparator()
-            + "Current theme: " + currentTheme + System.lineSeparator()
-            + "Current word: " + currentWord);
+                + "Current theme: " + currentTheme + System.lineSeparator()
+                + "Current word: " + currentWord);
         currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
     }
 
