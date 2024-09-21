@@ -25,6 +25,7 @@ public class Main {
         model.guessLetterListener(gameView);
         model.alreadyUsedLetterListener(gameView);
         model.notInAlphabetListener(gameView);
+        gameView.continueGameListener(model);
         controller.startNewGame();
     }
 }

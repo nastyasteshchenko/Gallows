@@ -10,11 +10,12 @@ import backend.academy.model.listener.GameWinListener;
 import backend.academy.model.listener.GuessLetterListener;
 import backend.academy.model.listener.NotInAlphabetListener;
 import backend.academy.model.word.Word;
+import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
 import java.io.IOException;
 
-public class Model implements StartNewGameListener, EnterLetterListener {
+public class Model implements StartNewGameListener, EnterLetterListener, ContinueGameListener {
 
     @Setter
     private ChooseDifficultyListener chooseDifficultyListener;
@@ -44,7 +45,6 @@ public class Model implements StartNewGameListener, EnterLetterListener {
                 String currentTheme = chooseTheme();
                 Difficulty currentDifficulty = chooseDifficulty();
                 String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
-                System.out.println(currentWord);
                 currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
                 if (drawGameListener != null) {
                     drawGameListener.onDrawGame(currentGameState.getGameInfo());
@@ -108,5 +108,10 @@ public class Model implements StartNewGameListener, EnterLetterListener {
             return chosenTheme.isEmpty() ? dictionary.getRandomTheme() : chosenTheme;
         }
         return null;
+    }
+
+    @Override
+    public void onContinueGame() {
+        onStartNewGame();
     }
 }

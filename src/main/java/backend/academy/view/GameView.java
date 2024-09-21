@@ -6,6 +6,7 @@ import backend.academy.model.listener.GameLooseListener;
 import backend.academy.model.listener.GameWinListener;
 import backend.academy.model.listener.GuessLetterListener;
 import backend.academy.model.listener.NotInAlphabetListener;
+import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
 import java.io.IOException;
@@ -16,6 +17,9 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
 
     @Setter
     private EnterLetterListener enterLetterListener;
+    @Setter
+    private ContinueGameListener continueGameListener;
+
     private static final String GAME_LOOSE_MSG = "You loose! The word was: ";
     private static final String GAME_WIN_MSG = "You won!";
     private final Scanner in = new Scanner(System.in);
@@ -38,11 +42,22 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     @Override
     public void onGameLoose(String word) {
         System.out.println(GAME_LOOSE_MSG + word);
+        askIfContinue();
+    }
+
+    private void askIfContinue() {
+        System.out.println();
+        System.out.println("Would you like to play again? Press Enter to continue or any other key to exit.");
+        String input = in.nextLine();
+        if (input.isEmpty()) {
+            continueGameListener.onContinueGame();
+        }
     }
 
     @Override
     public void onGameWin() {
         System.out.println(GAME_WIN_MSG);
+        askIfContinue();
     }
 
     @Override
