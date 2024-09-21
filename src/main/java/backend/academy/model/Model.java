@@ -51,7 +51,7 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
                 dictionary = Dictionary.loadDictionary();
                 LOGGER.info("Dictionary loaded.");
             }
-        } catch (IOException e) {
+        } catch (IOException | UnsupportedFileContentException e) {
             LOGGER.error("Failed to load dictionary.", e);
             errorListener.onError("Failed to load dictionary.");
             return;

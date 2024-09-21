@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-//TODO check file content
 class Dictionary {
 
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
@@ -19,8 +18,11 @@ class Dictionary {
     private Dictionary() {
     }
 
-    static Dictionary loadDictionary() throws IOException {
-        return OBJECT_MAPPER.readValue(Dictionary.class.getResourceAsStream(DICTIONARY_FILE), Dictionary.class);
+    static Dictionary loadDictionary() throws IOException, UnsupportedFileContentException {
+        Dictionary dictionary =
+            OBJECT_MAPPER.readValue(Dictionary.class.getResourceAsStream(DICTIONARY_FILE), Dictionary.class);
+        dictionary.checkDictionary();
+        return dictionary;
     }
 
     List<String> getThemes() {
@@ -34,5 +36,15 @@ class Dictionary {
     String getRandomWord(String theme, Difficulty difficulty) {
         List<String> possibleWords = dictionary.get(theme).get(difficulty);
         return possibleWords.get((int) (Math.random() * possibleWords.size()));
+    }
+
+    private void checkDictionary() throws UnsupportedFileContentException {
+        List<String> allWords = dictionary.values().stream()
+            .flatMap(map -> map.values().stream()).flatMap(List::stream).toList();
+        for (String word : allWords) {
+            if (!word.matches("[a-zA-Z]+")) {
+                throw UnsupportedFileContentException.unsupportedFileContentException(word);
+            }
+        }
     }
 }
