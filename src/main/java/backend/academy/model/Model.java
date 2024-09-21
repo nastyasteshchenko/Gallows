@@ -42,21 +42,16 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
             if (dictionary == null) {
                 dictionary = Dictionary.loadDictionary();
             }
-            String currentTheme = chooseTheme();
-            Difficulty currentDifficulty = chooseDifficulty();
-            if (currentDifficulty == null) {
-                currentDifficulty = Difficulty.getRandomDifficulty();
-            }
-            String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
-            currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
-            if (drawGameListener != null) {
-                drawGameListener.onDrawGame(currentGameState.getGameInfo());
-                if (guessLetterListener != null) {
-                    guessLetterListener.onGuessLetter();
-                }
-            }
         } catch (IOException e) {
             //TODO: handle exception
+            return;
+        }
+        buildCurrentGameState();
+        if (drawGameListener != null) {
+            drawGameListener.onDrawGame(currentGameState.getGameInfo());
+            if (guessLetterListener != null) {
+                guessLetterListener.onGuessLetter();
+            }
         }
     }
 
@@ -100,20 +95,33 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
         }
     }
 
+    private void buildCurrentGameState() {
+        String currentTheme = chooseTheme();
+        Difficulty currentDifficulty = chooseDifficulty();
+        if (currentDifficulty == null) {
+            currentDifficulty = Difficulty.getRandomDifficulty();
+        }
+        String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
+        currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
+    }
+
     private Difficulty chooseDifficulty() {
         if (chooseDifficultyListener != null) {
             String chosenDifficulty = chooseDifficultyListener.onChooseDifficulty(Difficulty.getAllDifficulties());
-            return chosenDifficulty.isEmpty() ? Difficulty.getRandomDifficulty() :
-                Difficulty.getByName(chosenDifficulty);
+            if (!chosenDifficulty.isEmpty()) {
+                return Difficulty.getByName(chosenDifficulty);
+            }
         }
-        return null;
+        return Difficulty.getRandomDifficulty();
     }
 
     private String chooseTheme() {
         if (chooseThemeListener != null) {
             String chosenTheme = chooseThemeListener.onChooseTheme(dictionary.getThemes());
-            return chosenTheme.isEmpty() ? dictionary.getRandomTheme() : chosenTheme;
+            if (!chosenTheme.isEmpty()) {
+                return chosenTheme;
+            }
         }
-        return null;
+        return dictionary.getRandomTheme();
     }
 }
