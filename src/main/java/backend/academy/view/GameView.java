@@ -15,13 +15,18 @@ import java.util.Scanner;
 public class GameView implements DrawGameListener, GameLooseListener, GameWinListener, GuessLetterListener,
     AlreadyUsedLetterListener, NotInAlphabetListener {
 
+    private static final String GAME_LOOSE_MSG = "You lost! The word was: ";
+    private static final String GAME_WIN_MSG = "You won!";
+    private static final String GAME_CONT_MSG =
+        "Would you like to play again? Press Enter to continue or any other key to exit.";
+    private static final String ALREADY_USED_LETTER_MSG = "You already used this letter. Try again.";
+    private static final String NOT_IN_ALPHABET_MSG = "This letter is not in the alphabet. Try again.";
+
     @Setter
     private EnterLetterListener enterLetterListener;
     @Setter
     private ContinueGameListener continueGameListener;
 
-    private static final String GAME_LOOSE_MSG = "You loose! The word was: ";
-    private static final String GAME_WIN_MSG = "You won!";
     private final Scanner in = new Scanner(System.in);
 
     @Override
@@ -43,15 +48,6 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     public void onGameLoose(String word) {
         System.out.println(GAME_LOOSE_MSG + word);
         askIfContinue();
-    }
-
-    private void askIfContinue() {
-        System.out.println();
-        System.out.println("Would you like to play again? Press Enter to continue or any other key to exit.");
-        String input = in.nextLine();
-        if (input.isEmpty()) {
-            continueGameListener.onContinueGame();
-        }
     }
 
     @Override
@@ -80,13 +76,13 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
 
     @Override
     public void onAlreadyUsedLetter() {
-        System.out.println("You already used this letter. Try again.");
+        System.out.println(ALREADY_USED_LETTER_MSG);
         onGuessLetter();
     }
 
     @Override
     public void onNotInAlphabet() {
-        System.out.println("This letter is not in the alphabet. Try again.");
+        System.out.println(NOT_IN_ALPHABET_MSG);
         onGuessLetter();
     }
 
@@ -95,6 +91,15 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
             ConsoleCleaningUtility.clearConsole();
         } catch (IOException e) {
             //TODO: handle exception
+        }
+    }
+
+    private void askIfContinue() {
+        System.out.println();
+        System.out.println(GAME_CONT_MSG);
+        String input = in.nextLine();
+        if (input.isEmpty()) {
+            continueGameListener.onContinueGame();
         }
     }
 }
