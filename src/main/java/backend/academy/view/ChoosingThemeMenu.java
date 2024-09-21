@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class ChoosingThemeMenu implements ChooseThemeListener {
+class ChoosingThemeMenu implements ChooseThemeListener {
 
     private final static String CHOOSE_THEME_MSG = "Select a theme:";
     private final static String ENTER_NUMBER_MSG =

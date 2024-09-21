@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-public class ChoosingDifficultyMenu implements ChooseDifficultyListener {
+class ChoosingDifficultyMenu implements ChooseDifficultyListener {
 
     private final static String CHOOSE_DIFFICULTY_MSG = "Select a difficulty:";
     private final static String ENTER_NUMBER_MSG =
