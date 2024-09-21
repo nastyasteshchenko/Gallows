@@ -19,7 +19,8 @@ public class Word {
     }
 
     public String getWord() {
-        return Arrays.toString(letters.stream().map(Letter::letter).toArray());
+        return letters.stream().map(Letter::letter)
+            .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString();
     }
 
     @Override

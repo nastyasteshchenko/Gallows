@@ -39,22 +39,22 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
 
     @Override
     public void onStartNewGame() {
-        if (dictionary == null) {
-            try {
+        try {
+            if (dictionary == null) {
                 dictionary = Dictionary.loadDictionary();
-                String currentTheme = chooseTheme();
-                Difficulty currentDifficulty = chooseDifficulty();
-                String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
-                currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
-                if (drawGameListener != null) {
-                    drawGameListener.onDrawGame(currentGameState.getGameInfo());
-                    if (guessLetterListener != null) {
-                        guessLetterListener.onGuessLetter();
-                    }
-                }
-            } catch (IOException e) {
-                //TODO: handle exception
             }
+            String currentTheme = chooseTheme();
+            Difficulty currentDifficulty = chooseDifficulty();
+            String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
+            currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
+            if (drawGameListener != null) {
+                drawGameListener.onDrawGame(currentGameState.getGameInfo());
+                if (guessLetterListener != null) {
+                    guessLetterListener.onGuessLetter();
+                }
+            }
+        } catch (IOException e) {
+            //TODO: handle exception
         }
     }
 
