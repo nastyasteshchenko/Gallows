@@ -1,10 +1,9 @@
 package backend.academy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-
 import java.util.Arrays;
 import java.util.List;
+import lombok.Getter;
 
 @Getter
 enum Difficulty {

@@ -3,7 +3,6 @@ package backend.academy.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

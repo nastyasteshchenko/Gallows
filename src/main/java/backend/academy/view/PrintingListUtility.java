@@ -1,8 +1,8 @@
 package backend.academy.view;
 
-import lombok.experimental.UtilityClass;
 import java.io.PrintStream;
 import java.util.List;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 class PrintingListUtility {

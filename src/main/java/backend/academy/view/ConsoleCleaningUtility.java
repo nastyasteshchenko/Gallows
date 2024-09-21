@@ -1,11 +1,10 @@
 package backend.academy.view;
 
+import java.io.IOException;
+import java.io.PrintStream;
 import lombok.experimental.UtilityClass;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.IOException;
-import java.io.PrintStream;
 
 @UtilityClass
 final class ConsoleCleaningUtility {

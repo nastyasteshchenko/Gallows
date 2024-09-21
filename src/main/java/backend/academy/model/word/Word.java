@@ -1,9 +1,8 @@
 package backend.academy.model.word;
 
-import lombok.Getter;
-
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
 public class Word {
 
@@ -20,7 +19,7 @@ public class Word {
 
     public String getWord() {
         return letters.stream().map(Letter::letter)
-                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString();
+            .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString();
     }
 
     @Override
@@ -39,7 +38,7 @@ public class Word {
 
     public boolean guessLetter(String letter) {
         letters.stream().filter(l -> letter.equalsIgnoreCase(String.valueOf(l.letter())))
-                .forEach(Letter::setGuessed);
+            .forEach(Letter::setGuessed);
         int oldGuessedLettersAmount = guessedLettersAmount;
         guessedLettersAmount = (int) letters.stream().filter(Letter::isGuessed).count();
         return guessedLettersAmount > oldGuessedLettersAmount;

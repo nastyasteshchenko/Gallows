@@ -1,12 +1,11 @@
 package backend.academy.view;
 
 import backend.academy.model.listener.ChooseDifficultyListener;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Scanner;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 class ChoosingDifficultyMenu implements ChooseDifficultyListener {
 

@@ -13,15 +13,16 @@ import backend.academy.model.listener.NotInAlphabetListener;
 import backend.academy.model.word.Word;
 import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
+import java.io.IOException;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-
 public class Model implements StartNewGameListener, EnterLetterListener, ContinueGameListener {
 
     private static final Logger LOGGER = LogManager.getLogger(Model.class);
+    private static final String DICTIONARY_ERROR_MSG = "Failed to load dictionary.";
+    private static final String LETTER_STR = "Letter ";
 
     @Setter
     private ChooseDifficultyListener chooseDifficultyListener;
@@ -54,8 +55,8 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
                 LOGGER.info("Dictionary loaded.");
             }
         } catch (IOException | UnsupportedFileContentException e) {
-            LOGGER.error("Failed to load dictionary.", e);
-            errorListener.onError("Failed to load dictionary.");
+            LOGGER.error(DICTIONARY_ERROR_MSG, e);
+            errorListener.onError(DICTIONARY_ERROR_MSG);
             return;
         }
         buildCurrentGameState();
@@ -74,48 +75,42 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
 
     @Override
     public void onEnterLetter(String letter) {
-        if (checkIfWrongLetter(letter)) {
-            return;
-        }
-        currentGameState.guessLetter(letter);
-        if (drawGameListener != null) {
-            drawGameListener.onDrawGame(currentGameState.getGameInfo());
-        }
-        if (currentGameState.isLoose()) {
-            if (gameLooseListener != null) {
-                LOGGER.debug("Game was lost.");
-                gameLooseListener.onGameLoose(currentGameState.word().getWord());
-            }
-            return;
-        }
-        if (currentGameState.isWin()) {
-            if (gameWinListener != null) {
-                LOGGER.debug("Game was won.");
-                gameWinListener.onGameWin();
-            }
-            return;
-        }
-        if (guessLetterListener != null) {
-            guessLetterListener.onGuessLetter();
-        }
-    }
-
-    private boolean checkIfWrongLetter(String letter) {
+        boolean shouldContinue = true;
         if (!currentGameState.isInAlphabet(letter)) {
             if (notInAlphabetListener != null) {
-                LOGGER.debug("Letter " + letter + " is not in the alphabet.");
+                LOGGER.debug(LETTER_STR + letter + " is not in the alphabet.");
                 notInAlphabetListener.onNotInAlphabet();
             }
-            return true;
-        }
-        if (currentGameState.isAlreadyUsed(letter)) {
+            shouldContinue = false;
+        } else if (currentGameState.isAlreadyUsed(letter)) {
             if (alreadyUsedLetterListener != null) {
-                LOGGER.debug("Letter " + letter + " has already been used.");
+                LOGGER.debug(LETTER_STR + letter + " has already been used.");
                 alreadyUsedLetterListener.onAlreadyUsedLetter();
             }
-            return true;
+            shouldContinue = false;
         }
-        return false;
+        if (shouldContinue) {
+            currentGameState.guessLetter(letter);
+            if (drawGameListener != null) {
+                drawGameListener.onDrawGame(currentGameState.getGameInfo());
+            }
+            if (currentGameState.isLoose()) {
+                if (gameLooseListener != null) {
+                    LOGGER.debug("Game was lost.");
+                    gameLooseListener.onGameLoose(currentGameState.word().getWord());
+                }
+                shouldContinue = false;
+            } else if (currentGameState.isWin()) {
+                if (gameWinListener != null) {
+                    LOGGER.debug("Game was won.");
+                    gameWinListener.onGameWin();
+                }
+                shouldContinue = false;
+            }
+            if (guessLetterListener != null && shouldContinue) {
+                guessLetterListener.onGuessLetter();
+            }
+        }
     }
 
     private void buildCurrentGameState() {

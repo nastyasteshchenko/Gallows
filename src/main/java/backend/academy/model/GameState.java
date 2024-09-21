@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 class GameState {
 
     private static final Logger LOGGER = LogManager.getLogger(GameState.class);
+    private static final String LETTER_STR = "Letter ";
 
     @Getter
     private final Word word;
@@ -42,10 +43,10 @@ class GameState {
 
     void guessLetter(String letter) {
         if (!word.guessLetter(letter)) {
-            LOGGER.debug("Letter " + letter + " is not in the word.");
+            LOGGER.debug(LETTER_STR + letter + " is not in the word.");
             attemptsLeft--;
         } else {
-            LOGGER.debug("Letter " + letter + " is in the word.");
+            LOGGER.debug(LETTER_STR + letter + " is in the word.");
         }
         alphabet.makeLetterAsUsed(letter);
     }

@@ -9,12 +9,11 @@ import backend.academy.model.listener.GuessLetterListener;
 import backend.academy.model.listener.NotInAlphabetListener;
 import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
+import java.io.PrintStream;
+import java.util.Scanner;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.io.PrintStream;
-import java.util.Scanner;
 
 public class GameView implements DrawGameListener, GameLooseListener, GameWinListener, GuessLetterListener,
         AlreadyUsedLetterListener, NotInAlphabetListener, ErrorListener {
@@ -116,6 +115,6 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
 
     @Override
     public void onError(String message) {
-        System.out.println(message);
+        out.println(message);
     }
 }
