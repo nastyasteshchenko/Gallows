@@ -4,9 +4,9 @@ import lombok.experimental.UtilityClass;
 import java.io.IOException;
 
 @UtilityClass
-public final class ConsoleCleaningUtility {
+final class ConsoleCleaningUtility {
 
-    public static void clearConsole() throws IOException {
+    static void clearConsole() throws IOException {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
