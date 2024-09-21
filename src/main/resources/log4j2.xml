@@ -38,7 +38,7 @@
 
         <Root level="TRACE">
             <AppenderRef ref="rollingFile" />
-            <AppenderRef ref="STDOUT_PLAIN"/>
+<!--            <AppenderRef ref="STDOUT_PLAIN"/>-->
         </Root>
     </Loggers>
 </Configuration>
