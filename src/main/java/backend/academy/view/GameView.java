@@ -35,14 +35,6 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
         System.out.println();
     }
 
-    private void clearScreen() {
-        try {
-            ConsoleCleaningUtility.clearConsole();
-        } catch (IOException e) {
-            //TODO: handle exception
-        }
-    }
-
     @Override
     public void onGameLoose(String word) {
         System.out.println(GAME_LOOSE_MSG + word);
@@ -81,5 +73,13 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     public void onNotInAlphabet() {
         System.out.println("This letter is not in the alphabet. Try again.");
         onGuessLetter();
+    }
+
+    private void clearScreen() {
+        try {
+            ConsoleCleaningUtility.clearConsole();
+        } catch (IOException e) {
+            //TODO: handle exception
+        }
     }
 }

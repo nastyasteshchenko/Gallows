@@ -58,23 +58,6 @@ public class Model implements StartNewGameListener, EnterLetterListener {
         }
     }
 
-    private Difficulty chooseDifficulty() {
-        if (chooseDifficultyListener != null) {
-            String chosenDifficulty = chooseDifficultyListener.onChooseDifficulty(Difficulty.getAllDifficulties());
-            return chosenDifficulty.isEmpty() ? Difficulty.getRandomDifficulty() :
-                Difficulty.getByName(chosenDifficulty);
-        }
-        return null;
-    }
-
-    private String chooseTheme() {
-        if (chooseThemeListener != null) {
-            String chosenTheme = chooseThemeListener.onChooseTheme(dictionary.getThemes());
-            return chosenTheme.isEmpty() ? dictionary.getRandomTheme() : chosenTheme;
-        }
-        return null;
-    }
-
     @Override
     public void onEnterLetter(String letter) {
         if (!currentGameState.isInAlphabet(letter)) {
@@ -108,5 +91,22 @@ public class Model implements StartNewGameListener, EnterLetterListener {
         if (guessLetterListener != null) {
             guessLetterListener.onGuessLetter();
         }
+    }
+
+    private Difficulty chooseDifficulty() {
+        if (chooseDifficultyListener != null) {
+            String chosenDifficulty = chooseDifficultyListener.onChooseDifficulty(Difficulty.getAllDifficulties());
+            return chosenDifficulty.isEmpty() ? Difficulty.getRandomDifficulty() :
+                Difficulty.getByName(chosenDifficulty);
+        }
+        return null;
+    }
+
+    private String chooseTheme() {
+        if (chooseThemeListener != null) {
+            String chosenTheme = chooseThemeListener.onChooseTheme(dictionary.getThemes());
+            return chosenTheme.isEmpty() ? dictionary.getRandomTheme() : chosenTheme;
+        }
+        return null;
     }
 }

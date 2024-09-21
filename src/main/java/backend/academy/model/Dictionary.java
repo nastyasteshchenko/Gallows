@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class Dictionary {
+class Dictionary {
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
     private static final String DICTIONARY_FILE = "/dictionary.json";
 
@@ -17,7 +17,7 @@ public class Dictionary {
     private Dictionary() {
     }
 
-    public static Dictionary loadDictionary() throws IOException {
+    static Dictionary loadDictionary() throws IOException {
         return OBJECT_MAPPER.readValue(Dictionary.class.getResourceAsStream(DICTIONARY_FILE), Dictionary.class);
     }
 
@@ -25,7 +25,7 @@ public class Dictionary {
         return dictionary.keySet().stream().toList();
     }
 
-    public String getRandomTheme() {
+    String getRandomTheme() {
         return getThemes().get((int) (Math.random() * dictionary.size()));
     }
 
