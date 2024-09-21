@@ -2,7 +2,6 @@ package backend.academy.model.word;
 
 import lombok.Getter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Word {
@@ -42,6 +41,6 @@ public class Word {
             .forEach(Letter::setGuessed);
         int oldGuessedLettersAmount = guessedLettersAmount;
         guessedLettersAmount = (int) letters.stream().filter(Letter::isGuessed).count();
-        return guessedLettersAmount != oldGuessedLettersAmount;
+        return guessedLettersAmount > oldGuessedLettersAmount;
     }
 }

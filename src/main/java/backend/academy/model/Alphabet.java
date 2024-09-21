@@ -15,6 +15,16 @@ class Alphabet {
         }
     }
 
+    @Override
+    public String toString() {
+        stringBuilder.setLength(0);
+        for (char freeLetter : freeLetters) {
+            stringBuilder.append(freeLetter).append(" ");
+        }
+        stringBuilder.append(System.lineSeparator());
+        return stringBuilder.toString();
+    }
+
     boolean isInAlphabet(String letter) {
         return ALPHABET.contains(letter.toUpperCase());
     }
@@ -25,15 +35,5 @@ class Alphabet {
 
     void makeLetterAsUsed(String letter) {
         freeLetters.remove((Character) letter.toUpperCase().charAt(0));
-    }
-
-    @Override
-    public String toString() {
-        stringBuilder.setLength(0);
-        for (char freeLetter : freeLetters) {
-            stringBuilder.append(freeLetter).append(" ");
-        }
-        stringBuilder.append(System.lineSeparator());
-        return stringBuilder.toString();
     }
 }

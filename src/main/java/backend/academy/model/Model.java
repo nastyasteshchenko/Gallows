@@ -37,14 +37,16 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
     private GameState currentGameState;
     private Dictionary dictionary;
 
-    @Override
-    public void onStartNewGame() {
+    @Override public void onStartNewGame() {
         try {
             if (dictionary == null) {
                 dictionary = Dictionary.loadDictionary();
             }
             String currentTheme = chooseTheme();
             Difficulty currentDifficulty = chooseDifficulty();
+            if (currentDifficulty == null) {
+                currentDifficulty = Difficulty.getRandomDifficulty();
+            }
             String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
             currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
             if (drawGameListener != null) {
@@ -56,6 +58,11 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
         } catch (IOException e) {
             //TODO: handle exception
         }
+    }
+
+    @Override
+    public void onContinueGame() {
+        onStartNewGame();
     }
 
     @Override
@@ -108,10 +115,5 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
             return chosenTheme.isEmpty() ? dictionary.getRandomTheme() : chosenTheme;
         }
         return null;
-    }
-
-    @Override
-    public void onContinueGame() {
-        onStartNewGame();
     }
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 class Dictionary {
+
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
     private static final String DICTIONARY_FILE = "/dictionary.json";
 

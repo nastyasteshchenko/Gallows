@@ -6,11 +6,11 @@ import lombok.Getter;
 
 class GameState {
 
+    @Getter
+    private final Word word;
     private final Alphabet alphabet = new Alphabet();
     private final Difficulty difficulty;
     private final String theme;
-    @Getter
-    private final Word word;
     private int attemptsLeft;
 
     GameState(Difficulty difficulty, String theme, Word word) {

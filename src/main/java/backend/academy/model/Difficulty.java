@@ -7,6 +7,7 @@ import java.util.List;
 
 @Getter
 enum Difficulty {
+
     @JsonProperty("easy")
     EASY(8),
     @JsonProperty("medium")
