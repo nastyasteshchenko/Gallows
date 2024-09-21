@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-class Dictionary {
+final class Dictionary {
 
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
     private static final String DICTIONARY_FILE = "/dictionary.json";
