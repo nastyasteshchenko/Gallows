@@ -1,30 +1,37 @@
 package backend.academy.view;
 
 import backend.academy.model.listener.ChooseThemeListener;
-import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Scanner;
 
 class ChoosingThemeMenu implements ChooseThemeListener {
+
+    private static final Logger LOGGER = LogManager.getLogger(ChoosingThemeMenu.class);
 
     private final static String CHOOSE_THEME_MSG = "Select a theme:";
     private final static String ENTER_NUMBER_MSG =
         "Enter the number of your preferred theme or just press Enter if it doesn't matter: ";
     private final static String NON_NUMERIC_VALUE_MSG = "Non-numeric value entered. Try again: ";
     private final static String OUT_OF_RANGE_MSG = "Number out of range. Try again: ";
+    private final static String MENU_CLOSED_MSG = "Choose theme menu was closed.";
 
     private final Scanner in = new Scanner(System.in);
 
     @Override
     public String onChooseTheme(List<String> possibleThemes) {
-        clearScreen();
+        LOGGER.info("Choose theme menu was opened.");
+        ConsoleCleaningUtility.clearConsole();
         System.out.println(CHOOSE_THEME_MSG);
         PrintingListUtility.printNumberedList(possibleThemes);
         System.out.print(ENTER_NUMBER_MSG);
 
         while (true) {
             String input = in.nextLine();
+            LOGGER.debug("User entered: " + input);
             if (input.isEmpty()) {
+                LOGGER.info(MENU_CLOSED_MSG);
                 return input;
             }
             try {
@@ -33,18 +40,11 @@ class ChoosingThemeMenu implements ChooseThemeListener {
                     System.out.print(OUT_OF_RANGE_MSG);
                     continue;
                 }
+                LOGGER.info(MENU_CLOSED_MSG);
                 return possibleThemes.get(number - 1);
             } catch (NumberFormatException e) {
                 System.out.print(NON_NUMERIC_VALUE_MSG);
             }
-        }
-    }
-
-    private void clearScreen() {
-        try {
-            ConsoleCleaningUtility.clearConsole();
-        } catch (IOException e) {
-            //TODO: handle exception
         }
     }
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+//TODO check file content
 class Dictionary {
 
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();

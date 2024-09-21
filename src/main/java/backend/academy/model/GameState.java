@@ -3,8 +3,12 @@ package backend.academy.model;
 import backend.academy.model.word.Word;
 import backend.academy.view.GameInfo;
 import lombok.Getter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 class GameState {
+
+    private static final Logger LOGGER = LogManager.getLogger(GameState.class);
 
     @Getter
     private final Word word;
@@ -38,7 +42,10 @@ class GameState {
 
     void guessLetter(String letter) {
         if (!word.guessLetter(letter)) {
+            LOGGER.debug("Letter " + letter + " is not in the word.");
             attemptsLeft--;
+        } else {
+            LOGGER.debug("Letter " + letter + " is in the word.");
         }
         alphabet.makeLetterAsUsed(letter);
     }

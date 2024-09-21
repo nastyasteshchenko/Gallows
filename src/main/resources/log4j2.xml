@@ -7,6 +7,18 @@
     strict="true"
 >
     <Appenders>
+        <RollingFile name="rollingFile"
+                     fileName="logs/log4j2.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" />
+                <SizeBasedTriggeringPolicy
+                    size="250 MB" />
+            </Policies>
+        </RollingFile>
         <Console name="STDOUT_PLAIN" target="SYSTEM_OUT">
             <PatternLayout
                 disableAnsi="false"
@@ -25,6 +37,7 @@
         <Logger name="io.restassured" level="INFO"/>
 
         <Root level="TRACE">
+            <AppenderRef ref="rollingFile" />
             <AppenderRef ref="STDOUT_PLAIN"/>
         </Root>
     </Loggers>
