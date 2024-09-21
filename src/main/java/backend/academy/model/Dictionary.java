@@ -10,7 +10,7 @@ import java.util.List;
 class Dictionary {
 
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
-    private static final String DICTIONARY_FILE = "/dictionary.json";
+    private static final String DICTIONARY_FILE = "./dictionary.json";
 
     @JsonProperty("dictionary")
     private HashMap<String, HashMap<Difficulty, List<String>>> dictionary;
@@ -20,7 +20,8 @@ class Dictionary {
 
     static Dictionary loadDictionary() throws IOException, UnsupportedFileContentException {
         Dictionary dictionary =
-            OBJECT_MAPPER.readValue(Dictionary.class.getResourceAsStream(DICTIONARY_FILE), Dictionary.class);
+            OBJECT_MAPPER.readValue(ClassLoader.getSystemResource(DICTIONARY_FILE), Dictionary.class);
+        System.out.println(ClassLoader.getSystemResource(DICTIONARY_FILE).getFile());
         dictionary.checkDictionary();
         return dictionary;
     }
