@@ -77,7 +77,9 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
                 continue;
             }
             LOGGER.info("Guess letter menu was closed.");
-            enterLetterListener.onEnterLetter(input);
+            if (enterLetterListener != null) {
+                enterLetterListener.onEnterLetter(input);
+            }
             break;
         }
     }
@@ -102,7 +104,9 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
         LOGGER.debug("User entered: " + input);
         LOGGER.info("Continue game menu was closed.");
         if (input.isEmpty()) {
-            continueGameListener.onContinueGame();
+            if (continueGameListener != null) {
+                continueGameListener.onContinueGame();
+            }
         }
     }
 
