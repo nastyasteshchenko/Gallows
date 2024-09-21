@@ -32,21 +32,22 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     private ContinueGameListener continueGameListener;
 
     private final Scanner in = new Scanner(System.in);
+    private final StringBuilder stringBuilder = new StringBuilder();
 
     @Override
     public void onDrawGame(GameInfo gameInfo) {
+        stringBuilder.setLength(0);
         ConsoleCleaningUtility.clearConsole();
-        System.out.println("Theme: " + gameInfo.theme());
-        System.out.println("Attempts left: " + gameInfo.attemptsLeft());
+        stringBuilder.append("Theme: ").append(gameInfo.theme()).append(System.lineSeparator())
+            .append("Attempts left: ").append(gameInfo.attemptsLeft()).append(System.lineSeparator());
         GallowsImage gallowsImage =
             GallowsImage.getByMistakesAmountAndDifficulty(
                 gameInfo.totalAttempts() - gameInfo.attemptsLeft(), gameInfo.totalAttempts());
         LOGGER.debug("Gallows image: " + gallowsImage.name());
-        System.out.println(gallowsImage.image());
-        System.out.println(gameInfo.wordLetters());
-        System.out.println();
-        System.out.println("Possible letters: " + gameInfo.alphabet());
-        System.out.println();
+        stringBuilder.append(gallowsImage.image()).append(System.lineSeparator())
+            .append(gameInfo.wordLetters()).append(System.lineSeparator()).append(System.lineSeparator())
+            .append("Possible letters: ").append(gameInfo.alphabet()).append(System.lineSeparator());
+        System.out.println(stringBuilder);
     }
 
     @Override
