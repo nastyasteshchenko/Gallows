@@ -86,27 +86,28 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
             }
             shouldContinue = false;
         }
-        if (shouldContinue) {
-            currentGameState.guessLetter(letter);
-            if (drawGameListener != null) {
-                drawGameListener.onDrawGame(currentGameState.getGameInfo());
+        if (!shouldContinue) {
+            return;
+        }
+        currentGameState.guessLetter(letter);
+        if (drawGameListener != null) {
+            drawGameListener.onDrawGame(currentGameState.getGameInfo());
+        }
+        if (currentGameState.isLoose()) {
+            if (gameLooseListener != null) {
+                LOGGER.debug("Game was lost.");
+                gameLooseListener.onGameLoose(currentGameState.word().getWord());
             }
-            if (currentGameState.isLoose()) {
-                if (gameLooseListener != null) {
-                    LOGGER.debug("Game was lost.");
-                    gameLooseListener.onGameLoose(currentGameState.word().getWord());
-                }
-                shouldContinue = false;
-            } else if (currentGameState.isWin()) {
-                if (gameWinListener != null) {
-                    LOGGER.debug("Game was won.");
-                    gameWinListener.onGameWin();
-                }
-                shouldContinue = false;
+            shouldContinue = false;
+        } else if (currentGameState.isWin()) {
+            if (gameWinListener != null) {
+                LOGGER.debug("Game was won.");
+                gameWinListener.onGameWin();
             }
-            if (guessLetterListener != null && shouldContinue) {
-                guessLetterListener.onGuessLetter();
-            }
+            shouldContinue = false;
+        }
+        if (guessLetterListener != null && shouldContinue) {
+            guessLetterListener.onGuessLetter();
         }
     }
 
