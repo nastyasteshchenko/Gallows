@@ -1,5 +1,6 @@
 package backend.academy.view;
 
+import backend.academy.model.Model;
 import backend.academy.model.listener.AlreadyUsedLetterListener;
 import backend.academy.model.listener.DrawGameListener;
 import backend.academy.model.listener.ErrorListener;
@@ -12,7 +13,6 @@ import backend.academy.view.listener.EnterLetterListener;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,13 +26,17 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     private static final String ALREADY_USED_LETTER_MSG = "You already used this letter. Try again.";
     private static final String NOT_IN_ALPHABET_MSG = "This letter is not in the alphabet. Try again.";
 
-    @Setter
     private EnterLetterListener enterLetterListener;
-    @Setter
     private ContinueGameListener continueGameListener;
 
     private final PrintStream out = System.out;
     private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
+
+    public void initialize(Model model) {
+        enterLetterListener = model;
+        continueGameListener = model;
+        log.info("View listeners were set.");
+    }
 
     @Override
     public void onDrawGame(GameInfo gameInfo) {

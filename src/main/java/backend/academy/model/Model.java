@@ -11,9 +11,9 @@ import backend.academy.model.listener.GameWinListener;
 import backend.academy.model.listener.GuessLetterListener;
 import backend.academy.model.listener.NotInAlphabetListener;
 import backend.academy.model.word.Word;
+import backend.academy.view.View;
 import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -22,27 +22,31 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
     private static final String DICTIONARY_ERROR_MSG = "Failed to load dictionary.";
     private static final String LETTER_STR = "Letter ";
 
-    @Setter
     private ChooseDifficultyListener chooseDifficultyListener;
-    @Setter
     private ChooseThemeListener chooseThemeListener;
-    @Setter
     private DrawGameListener drawGameListener;
-    @Setter
     private GameWinListener gameWinListener;
-    @Setter
     private GameLooseListener gameLooseListener;
-    @Setter
     private GuessLetterListener guessLetterListener;
-    @Setter
     private AlreadyUsedLetterListener alreadyUsedLetterListener;
-    @Setter
     private NotInAlphabetListener notInAlphabetListener;
-    @Setter
     private ErrorListener errorListener;
 
     private GameState currentGameState;
     private Dictionary dictionary;
+
+    public void initialize(View view) {
+        chooseThemeListener = view.chooseThemeMenu();
+        chooseDifficultyListener = view.chooseDifficultyMenu();
+        drawGameListener = view.gameView();
+        gameWinListener = view.gameView();
+        gameLooseListener = view.gameView();
+        guessLetterListener = view.gameView();
+        alreadyUsedLetterListener = view.gameView();
+        notInAlphabetListener = view.gameView();
+        errorListener = view.gameView();
+        log.info("Model listeners were set.");
+    }
 
     @Override
     public void onStartNewGame() {

@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         log.info("Program was started.");
         GameInitializer gameInitializer = new GameInitializer();
-        Controller controller = gameInitializer.init();
+        Controller controller = gameInitializer.initialize();
         controller.startNewGame();
         log.info("Program was finished.");
     }
