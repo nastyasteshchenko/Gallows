@@ -52,7 +52,9 @@ public final class Dictionary {
 
     private void checkDictionary() throws UnsupportedFileContentException {
         List<String> allWords = dictionary.values().stream()
-            .flatMap(map -> map.values().stream()).flatMap(List::stream).toList();
+            .flatMap(map -> map.values().stream())
+            .flatMap(List::stream)
+            .toList();
         for (String word : allWords) {
             if (!word.matches(GAME_WORDS_REGEX)) {
                 throw new UnsupportedFileContentException(word);
