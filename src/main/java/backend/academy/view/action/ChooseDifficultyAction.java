@@ -2,10 +2,7 @@ package backend.academy.view.action;
 
 import backend.academy.view.ConsoleCleaningUtility;
 import backend.academy.view.PrintListUtility;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Scanner;
 import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 
