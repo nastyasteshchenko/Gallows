@@ -1,12 +1,8 @@
 package backend.academy.model;
 
-class UnsupportedFileContentException extends Exception {
+public class UnsupportedFileContentException extends Exception {
 
-    UnsupportedFileContentException(String message) {
-        super(message);
-    }
-
-    static UnsupportedFileContentException unsupportedFileContentException(String word) {
-        return new UnsupportedFileContentException("Unsupported file content: " + word);
+    public UnsupportedFileContentException(String word) {
+        super("Unsupported file content: " + word);
     }
 }

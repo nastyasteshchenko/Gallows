@@ -3,14 +3,14 @@ package backend.academy.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-final class Dictionary {
+public final class Dictionary {
 
     private static final Logger LOGGER = LogManager.getLogger(Dictionary.class);
 
@@ -25,7 +25,7 @@ final class Dictionary {
     private Dictionary() {
     }
 
-    static Dictionary loadDictionary() {
+    public static Dictionary loadDictionary() {
         try {
             Dictionary dictionary =
                 OBJECT_MAPPER.readValue(Dictionary.class.getResource(DICTIONARY_FILE), Dictionary.class);
@@ -37,17 +37,17 @@ final class Dictionary {
         }
     }
 
-    List<String> getThemes() {
+    public List<String> getThemes() {
         return dictionary.keySet()
             .stream()
             .toList();
     }
 
-    String getRandomTheme() {
+    public String getRandomTheme() {
         return getThemes().get(random.nextInt(dictionary.size()));
     }
 
-    String getRandomWord(String theme, Difficulty difficulty) {
+    public String getRandomWord(String theme, Difficulty difficulty) {
         List<String> possibleWords = dictionary.get(theme).get(difficulty);
         return possibleWords.get(random.nextInt(possibleWords.size()));
     }
@@ -57,7 +57,7 @@ final class Dictionary {
             .flatMap(map -> map.values().stream()).flatMap(List::stream).toList();
         for (String word : allWords) {
             if (!word.matches(GAME_WORDS_REGEX)) {
-                throw UnsupportedFileContentException.unsupportedFileContentException(word);
+                throw new UnsupportedFileContentException(word);
             }
         }
     }
