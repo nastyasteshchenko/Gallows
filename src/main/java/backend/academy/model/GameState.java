@@ -6,10 +6,10 @@ import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class GameState {
+public class GameState {
 
     private static final Logger LOGGER = LogManager.getLogger(GameState.class);
-    private static final String LETTER_STR = "Letter ";
+    private static final String LETTER = "Letter ";
 
     @Getter
     private final Word word;
@@ -18,40 +18,40 @@ class GameState {
     private final String theme;
     private int attemptsLeft;
 
-    GameState(Difficulty difficulty, String theme, Word word) {
+    public GameState(Difficulty difficulty, String theme, Word word) {
         this.difficulty = difficulty;
         this.theme = theme;
         this.word = word;
         this.attemptsLeft = difficulty.attempts();
     }
 
-    boolean isWin() {
+    public boolean isWin() {
         return word.isGuessed();
     }
 
-    boolean isLoose() {
+    public boolean isLoose() {
         return attemptsLeft == 0;
     }
 
-    boolean isAlreadyUsed(String letter) {
+    public boolean isAlreadyUsed(String letter) {
         return alphabet.isAlreadyUsed(letter);
     }
 
-    boolean isInAlphabet(String letter) {
+    public boolean isInAlphabet(String letter) {
         return alphabet.isInAlphabet(letter);
     }
 
-    void guessLetter(String letter) {
+    public void guessLetter(String letter) {
         if (!word.guessLetter(letter)) {
-            LOGGER.debug(LETTER_STR + letter + " is not in the word.");
+            LOGGER.debug(LETTER + letter + " is not in the word.");
             attemptsLeft--;
         } else {
-            LOGGER.debug(LETTER_STR + letter + " is in the word.");
+            LOGGER.debug(LETTER + letter + " is in the word.");
         }
         alphabet.makeLetterAsUsed(letter);
     }
 
-    GameInfo getGameInfo() {
+    public GameInfo getGameInfo() {
         return new GameInfo(word.toString(), attemptsLeft, difficulty.attempts(), theme, alphabet.toString());
     }
 }

@@ -7,12 +7,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @UtilityClass
-final class ConsoleCleaningUtility {
+public final class ConsoleCleaningUtility {
 
     private static final Logger LOGGER = LogManager.getLogger(ConsoleCleaningUtility.class);
     private final PrintStream out = System.out;
 
-    static void clearConsole() {
+    public static void clearConsole() {
         try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();

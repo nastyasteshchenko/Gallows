@@ -8,7 +8,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class ChooseThemeMenu implements ChooseThemeListener {
+public class ChooseThemeMenu implements ChooseThemeListener {
 
     private static final Logger LOGGER = LogManager.getLogger(ChooseThemeMenu.class);
 

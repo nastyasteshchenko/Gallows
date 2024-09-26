@@ -8,7 +8,7 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class ChooseDifficultyMenu implements ChooseDifficultyListener {
+public class ChooseDifficultyMenu implements ChooseDifficultyListener {
 
     private static final Logger LOGGER = LogManager.getLogger(ChooseDifficultyMenu.class);
 

@@ -3,13 +3,13 @@ package backend.academy.model;
 import java.util.LinkedList;
 import java.util.List;
 
-class Alphabet {
+public class Alphabet {
 
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final List<Character> freeLetters = new LinkedList<>();
     private final StringBuilder stringBuilder = new StringBuilder();
 
-    Alphabet() {
+    public Alphabet() {
         for (int i = 0; i < ALPHABET.length(); i++) {
             freeLetters.add(ALPHABET.charAt(i));
         }
@@ -24,15 +24,15 @@ class Alphabet {
         return stringBuilder.toString();
     }
 
-    boolean isInAlphabet(String letter) {
+    public boolean isInAlphabet(String letter) {
         return ALPHABET.contains(letter.toUpperCase());
     }
 
-    boolean isAlreadyUsed(String letter) {
+    public boolean isAlreadyUsed(String letter) {
         return !freeLetters.contains(letter.toUpperCase().charAt(0));
     }
 
-    void makeLetterAsUsed(String letter) {
+    public void makeLetterAsUsed(String letter) {
         freeLetters.remove((Character) letter.toUpperCase().charAt(0));
     }
 }

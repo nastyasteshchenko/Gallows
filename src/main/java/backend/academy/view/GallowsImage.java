@@ -3,7 +3,7 @@ package backend.academy.view;
 import lombok.Getter;
 
 @Getter
-enum GallowsImage {
+public enum GallowsImage {
 
     NO_GALLOWS("""
 
@@ -101,7 +101,7 @@ enum GallowsImage {
         this.image = image;
     }
 
-    static GallowsImage getByMistakesAmountAndDifficulty(int mistakesAmount, int totalAttempts) {
+    public static GallowsImage getByMistakesAmountAndDifficulty(int mistakesAmount, int totalAttempts) {
         int imageIndex = mistakesAmount * (values().length + 1) / (totalAttempts + 1);
         return values()[imageIndex];
     }

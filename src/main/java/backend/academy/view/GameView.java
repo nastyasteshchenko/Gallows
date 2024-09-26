@@ -17,14 +17,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GameView implements DrawGameListener, GameLooseListener, GameWinListener, GuessLetterListener,
-        AlreadyUsedLetterListener, NotInAlphabetListener, ErrorListener {
+    AlreadyUsedLetterListener, NotInAlphabetListener, ErrorListener {
 
     private static final Logger LOGGER = LogManager.getLogger(GameView.class);
 
     private static final String GAME_LOOSE_MSG = "You lost! The word was: ";
     private static final String GAME_WIN_MSG = "You won!";
     private static final String GAME_CONT_MSG =
-            "Would you like to play again? Press Enter to continue or any other key to exit.";
+        "Would you like to play again? Press Enter to continue or any other key to exit.";
     private static final String ALREADY_USED_LETTER_MSG = "You already used this letter. Try again.";
     private static final String NOT_IN_ALPHABET_MSG = "This letter is not in the alphabet. Try again.";
 
@@ -34,7 +34,7 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
     private ContinueGameListener continueGameListener;
 
     private final PrintStream out = System.out;
-    private final Scanner in = new Scanner(System.in,  StandardCharsets.UTF_8);
+    private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
     private final StringBuilder stringBuilder = new StringBuilder();
 
     @Override
@@ -42,14 +42,14 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
         stringBuilder.setLength(0);
         ConsoleCleaningUtility.clearConsole();
         stringBuilder.append("Theme: ").append(gameInfo.theme()).append(System.lineSeparator())
-                .append("Attempts left: ").append(gameInfo.attemptsLeft()).append(System.lineSeparator());
+            .append("Attempts left: ").append(gameInfo.attemptsLeft()).append(System.lineSeparator());
         GallowsImage gallowsImage =
-                GallowsImage.getByMistakesAmountAndDifficulty(
-                        gameInfo.totalAttempts() - gameInfo.attemptsLeft(), gameInfo.totalAttempts());
+            GallowsImage.getByMistakesAmountAndDifficulty(
+                gameInfo.totalAttempts() - gameInfo.attemptsLeft(), gameInfo.totalAttempts());
         LOGGER.debug("Gallows image: " + gallowsImage.name());
         stringBuilder.append(gallowsImage.image()).append(System.lineSeparator())
-                .append(gameInfo.wordLetters()).append(System.lineSeparator()).append(System.lineSeparator())
-                .append("Possible letters: ").append(gameInfo.alphabet()).append(System.lineSeparator());
+            .append(gameInfo.wordLetters()).append(System.lineSeparator()).append(System.lineSeparator())
+            .append("Possible letters: ").append(gameInfo.alphabet()).append(System.lineSeparator());
         out.println(stringBuilder);
     }
 
@@ -100,6 +100,11 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
         onGuessLetter();
     }
 
+    @Override
+    public void onError(String message) {
+        out.println(message);
+    }
+
     private void askIfContinue() {
         LOGGER.info("Continue game menu was opened.");
         out.println();
@@ -112,10 +117,5 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
                 continueGameListener.onContinueGame();
             }
         }
-    }
-
-    @Override
-    public void onError(String message) {
-        out.println(message);
     }
 }
