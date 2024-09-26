@@ -27,7 +27,8 @@ public class Word {
 
     @Override
     public String toString() {
-        List<Character> characters = letters.stream().map(l -> l.isGuessed() ? l.letter() : '_')
+        List<Character> characters = letters.stream()
+            .map(l -> l.isGuessed() ? l.letter() : '_')
             .toList();
         return characters.stream()
             .map(String::valueOf)

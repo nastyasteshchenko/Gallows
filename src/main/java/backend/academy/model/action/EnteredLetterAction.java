@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 public class EnteredLetterAction implements Consumer<String> {
 
-    private final Model model;
+    private static final String LETTER = "Letter ";
 
-    private static final String LETTER_STR = "Letter ";
+    private final Model model;
 
     private Consumer<String> gameLooseAction;
     private Consumer<String> guessLetterInModelAction;
@@ -31,13 +31,13 @@ public class EnteredLetterAction implements Consumer<String> {
         boolean shouldContinue = true;
         if (!model.currentGameState().isInAlphabet(letter)) {
             if (notInAlphabetAction != null) {
-                log.debug(LETTER_STR + letter + " is not in the alphabet.");
+                log.debug(LETTER + letter + " is not in the alphabet.");
                 notInAlphabetAction.run();
             }
             shouldContinue = false;
         } else if (model.currentGameState().isAlreadyUsed(letter)) {
             if (alreadyUsedLetterAction != null) {
-                log.debug(LETTER_STR + letter + " has already been used.");
+                log.debug(LETTER + letter + " has already been used.");
                 alreadyUsedLetterAction.run();
             }
             shouldContinue = false;
