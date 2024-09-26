@@ -13,7 +13,6 @@ import backend.academy.model.listener.NotInAlphabetListener;
 import backend.academy.model.word.Word;
 import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
-import java.io.IOException;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,15 +48,13 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
     @Override
     public void onStartNewGame() {
         LOGGER.info("Starting new game.");
-        try {
+        if (dictionary == null) {
+            dictionary = Dictionary.loadDictionary();
             if (dictionary == null) {
-                dictionary = Dictionary.loadDictionary();
-                LOGGER.info("Dictionary loaded.");
+                errorListener.onError(DICTIONARY_ERROR_MSG);
+                return;
             }
-        } catch (IOException | UnsupportedFileContentException e) {
-            LOGGER.error(DICTIONARY_ERROR_MSG, e);
-            errorListener.onError(DICTIONARY_ERROR_MSG);
-            return;
+            LOGGER.info("Dictionary loaded.");
         }
         buildCurrentGameState();
         if (drawGameListener != null) {
@@ -121,8 +118,8 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
         }
         String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
         LOGGER.debug("Current difficulty: " + currentDifficulty + System.lineSeparator()
-                + "Current theme: " + currentTheme + System.lineSeparator()
-                + "Current word: " + currentWord);
+            + "Current theme: " + currentTheme + System.lineSeparator()
+            + "Current word: " + currentWord);
         currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));
     }
 

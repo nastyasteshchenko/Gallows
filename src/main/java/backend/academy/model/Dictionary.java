@@ -3,12 +3,16 @@ package backend.academy.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
 
 final class Dictionary {
+
+    private static final Logger LOGGER = LogManager.getLogger(Dictionary.class);
 
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
     private static final String DICTIONARY_FILE = "/dictionary.json";
@@ -20,15 +24,22 @@ final class Dictionary {
     private Dictionary() {
     }
 
-    static Dictionary loadDictionary() throws IOException, UnsupportedFileContentException {
-        Dictionary dictionary =
-            OBJECT_MAPPER.readValue(Dictionary.class.getResource(DICTIONARY_FILE), Dictionary.class);
-        dictionary.checkDictionary();
-        return dictionary;
+    static Dictionary loadDictionary() {
+        try {
+            Dictionary dictionary =
+                OBJECT_MAPPER.readValue(Dictionary.class.getResource(DICTIONARY_FILE), Dictionary.class);
+            dictionary.checkDictionary();
+            return dictionary;
+        } catch (IOException | UnsupportedFileContentException e) {
+            LOGGER.error(e);
+            return null;
+        }
     }
 
     List<String> getThemes() {
-        return dictionary.keySet().stream().toList();
+        return dictionary.keySet()
+            .stream()
+            .toList();
     }
 
     String getRandomTheme() {
