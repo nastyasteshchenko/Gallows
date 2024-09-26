@@ -5,12 +5,10 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class ChooseThemeMenu implements ChooseThemeListener {
-
-    private static final Logger LOGGER = LogManager.getLogger(ChooseThemeMenu.class);
 
     private final static String CHOOSE_THEME_MSG = "Select a theme:";
     private final static String ENTER_NUMBER_MSG =
@@ -24,7 +22,7 @@ public class ChooseThemeMenu implements ChooseThemeListener {
 
     @Override
     public String onChooseTheme(List<String> possibleThemes) {
-        LOGGER.info("Choose theme menu was opened.");
+        log.info("Choose theme menu was opened.");
         ConsoleCleaningUtility.clearConsole();
         out.println(CHOOSE_THEME_MSG);
         PrintListUtility.printNumberedList(possibleThemes);
@@ -32,9 +30,9 @@ public class ChooseThemeMenu implements ChooseThemeListener {
 
         while (true) {
             String input = in.nextLine();
-            LOGGER.debug("User entered: " + input);
+            log.debug("User entered: " + input);
             if (input.isEmpty()) {
-                LOGGER.info(MENU_CLOSED_MSG);
+                log.info(MENU_CLOSED_MSG);
                 return input;
             }
             try {
@@ -43,7 +41,7 @@ public class ChooseThemeMenu implements ChooseThemeListener {
                     out.print(OUT_OF_RANGE_MSG);
                     continue;
                 }
-                LOGGER.info(MENU_CLOSED_MSG);
+                log.info(MENU_CLOSED_MSG);
                 return possibleThemes.get(number - 1);
             } catch (NumberFormatException e) {
                 out.print(NON_NUMERIC_VALUE_MSG);

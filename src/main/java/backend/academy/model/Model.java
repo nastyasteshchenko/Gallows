@@ -14,12 +14,11 @@ import backend.academy.model.word.Word;
 import backend.academy.view.listener.ContinueGameListener;
 import backend.academy.view.listener.EnterLetterListener;
 import lombok.Setter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Model implements StartNewGameListener, EnterLetterListener, ContinueGameListener {
 
-    private static final Logger LOGGER = LogManager.getLogger(Model.class);
     private static final String DICTIONARY_ERROR_MSG = "Failed to load dictionary.";
     private static final String LETTER_STR = "Letter ";
 
@@ -47,14 +46,14 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
 
     @Override
     public void onStartNewGame() {
-        LOGGER.info("Starting new game.");
+        log.info("Starting new game.");
         if (dictionary == null) {
             dictionary = Dictionary.loadDictionary();
             if (dictionary == null) {
                 errorListener.onError(DICTIONARY_ERROR_MSG);
                 return;
             }
-            LOGGER.info("Dictionary loaded.");
+            log.info("Dictionary loaded.");
         }
         buildCurrentGameState();
         if (drawGameListener != null) {
@@ -75,13 +74,13 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
         boolean shouldContinue = true;
         if (!currentGameState.isInAlphabet(letter)) {
             if (notInAlphabetListener != null) {
-                LOGGER.debug(LETTER_STR + letter + " is not in the alphabet.");
+                log.debug(LETTER_STR + letter + " is not in the alphabet.");
                 notInAlphabetListener.onNotInAlphabet();
             }
             shouldContinue = false;
         } else if (currentGameState.isAlreadyUsed(letter)) {
             if (alreadyUsedLetterListener != null) {
-                LOGGER.debug(LETTER_STR + letter + " has already been used.");
+                log.debug(LETTER_STR + letter + " has already been used.");
                 alreadyUsedLetterListener.onAlreadyUsedLetter();
             }
             shouldContinue = false;
@@ -95,13 +94,13 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
         }
         if (currentGameState.isLoose()) {
             if (gameLooseListener != null) {
-                LOGGER.debug("Game was lost.");
+                log.debug("Game was lost.");
                 gameLooseListener.onGameLoose(currentGameState.word().getWord());
             }
             shouldContinue = false;
         } else if (currentGameState.isWin()) {
             if (gameWinListener != null) {
-                LOGGER.debug("Game was won.");
+                log.debug("Game was won.");
                 gameWinListener.onGameWin();
             }
             shouldContinue = false;
@@ -118,7 +117,7 @@ public class Model implements StartNewGameListener, EnterLetterListener, Continu
             currentDifficulty = Difficulty.getRandomDifficulty();
         }
         String currentWord = dictionary.getRandomWord(currentTheme, currentDifficulty);
-        LOGGER.debug("Current difficulty: " + currentDifficulty + System.lineSeparator()
+        log.debug("Current difficulty: " + currentDifficulty + System.lineSeparator()
             + "Current theme: " + currentTheme + System.lineSeparator()
             + "Current word: " + currentWord);
         currentGameState = new GameState(currentDifficulty, currentTheme, new Word(currentWord));

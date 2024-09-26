@@ -4,11 +4,10 @@ import backend.academy.controller.Controller;
 import backend.academy.model.Model;
 import backend.academy.view.GameView;
 import backend.academy.view.View;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class GameInitializer {
-    private static final Logger LOGGER = LogManager.getLogger(GameInitializer.class);
 
     Controller init() {
         Model model = new Model();
@@ -31,17 +30,17 @@ public class GameInitializer {
         model.alreadyUsedLetterListener(view.gameView());
         model.notInAlphabetListener(view.gameView());
         model.errorListener(view.gameView());
-        LOGGER.info("Model listeners were set.");
+        log.info("Model listeners were set.");
     }
 
     private static void setViewListener(GameView gameView, Model model) {
         gameView.enterLetterListener(model);
         gameView.continueGameListener(model);
-        LOGGER.info("View listeners were set.");
+        log.info("View listeners were set.");
     }
 
     private static void setControllerListener(Controller controller, Model model) {
         controller.startNewGameListener(model);
-        LOGGER.info("Controller listeners were set.");
+        log.info("Controller listeners were set.");
     }
 }

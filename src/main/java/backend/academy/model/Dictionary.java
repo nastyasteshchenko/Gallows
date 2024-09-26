@@ -7,12 +7,10 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public final class Dictionary {
-
-    private static final Logger LOGGER = LogManager.getLogger(Dictionary.class);
 
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
     private static final String DICTIONARY_FILE = "/dictionary.json";
@@ -32,7 +30,7 @@ public final class Dictionary {
             dictionary.checkDictionary();
             return dictionary;
         } catch (IOException | UnsupportedFileContentException e) {
-            LOGGER.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }

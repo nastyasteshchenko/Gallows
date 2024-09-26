@@ -3,13 +3,12 @@ package backend.academy.view;
 import java.io.IOException;
 import java.io.PrintStream;
 import lombok.experimental.UtilityClass;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 @UtilityClass
+@Slf4j
 public final class ConsoleCleaningUtility {
 
-    private static final Logger LOGGER = LogManager.getLogger(ConsoleCleaningUtility.class);
     private final PrintStream out = System.out;
 
     public static void clearConsole() {
@@ -20,7 +19,7 @@ public final class ConsoleCleaningUtility {
                 out.print("\033\143");
             }
         } catch (IOException | InterruptedException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             out.println("Something went wrong while clearing the console.");
         }
     }
