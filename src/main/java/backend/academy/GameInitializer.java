@@ -2,20 +2,20 @@ package backend.academy;
 
 import backend.academy.controller.Controller;
 import backend.academy.model.Model;
-import backend.academy.view.View;
-import lombok.extern.slf4j.Slf4j;
+import backend.academy.model.action.ModelAction;
+import backend.academy.view.action.ViewAction;
 
-@Slf4j
 public class GameInitializer {
 
     Controller initialize() {
         Model model = new Model();
+        ModelAction modelAction = new ModelAction(model);
         Controller controller = new Controller();
-        View view = new View();
+        ViewAction viewAction = new ViewAction();
 
-        model.initialize(view);
-        view.initialize(model);
-        controller.initialize(model);
+        viewAction.initialize(modelAction);
+        modelAction.initialize(viewAction);
+        controller.initialize(modelAction.startNewGameAction()::performAction);
 
         return controller;
     }

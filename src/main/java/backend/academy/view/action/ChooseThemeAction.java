@@ -1,6 +1,7 @@
-package backend.academy.view;
+package backend.academy.view.action;
 
-import backend.academy.model.listener.ChooseThemeListener;
+import backend.academy.view.ConsoleCleaningUtility;
+import backend.academy.view.PrintListUtility;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -8,20 +9,19 @@ import java.util.Scanner;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ChooseThemeMenu implements ChooseThemeListener {
+public class ChooseThemeAction {
 
     private final static String CHOOSE_THEME_MSG = "Select a theme:";
     private final static String ENTER_NUMBER_MSG =
-            "Enter the number of your preferred theme or just press Enter if it doesn't matter: ";
+        "Enter the number of your preferred theme or just press Enter if it doesn't matter: ";
     private final static String NON_NUMERIC_VALUE_MSG = "Non-numeric value entered. Try again: ";
     private final static String OUT_OF_RANGE_MSG = "Number out of range. Try again: ";
     private final static String MENU_CLOSED_MSG = "Choose theme menu was closed.";
 
     private final PrintStream out = System.out;
-    private final Scanner in = new Scanner(System.in,  StandardCharsets.UTF_8);
+    private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
 
-    @Override
-    public String onChooseTheme(List<String> possibleThemes) {
+    public String performAction(List<String> possibleThemes) {
         log.info("Choose theme menu was opened.");
         ConsoleCleaningUtility.clearConsole();
         out.println(CHOOSE_THEME_MSG);

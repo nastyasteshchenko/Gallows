@@ -1,6 +1,7 @@
-package backend.academy.view;
+package backend.academy.view.action;
 
-import backend.academy.model.listener.ChooseDifficultyListener;
+import backend.academy.view.ConsoleCleaningUtility;
+import backend.academy.view.PrintListUtility;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Scanner;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ChooseDifficultyMenu implements ChooseDifficultyListener {
+public class ChooseDifficultyAction {
 
     private final static String CHOOSE_DIFFICULTY_MSG = "Select a difficulty:";
     private final static String ENTER_NUMBER_MSG =
@@ -20,8 +21,7 @@ public class ChooseDifficultyMenu implements ChooseDifficultyListener {
     private final PrintStream out = System.out;
     private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
 
-    @Override
-    public String onChooseDifficulty(List<String> possibleDifficulties) {
+    public String performAction(List<String> possibleDifficulties) {
         log.info("Choose difficulty menu was opened.");
         ConsoleCleaningUtility.clearConsole();
         out.println(CHOOSE_DIFFICULTY_MSG);

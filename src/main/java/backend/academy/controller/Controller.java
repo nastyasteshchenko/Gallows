@@ -1,22 +1,20 @@
 package backend.academy.controller;
 
-import backend.academy.controller.listener.StartNewGameListener;
-import backend.academy.model.Model;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class Controller {
 
-    private StartNewGameListener startNewGameListener;
+    private Runnable startNewGameAction;
 
-    public void initialize(Model model) {
-        startNewGameListener = model;
-        log.info("Controller listeners were set.");
+    public void initialize(Runnable startNewGameAction) {
+        this.startNewGameAction = startNewGameAction;
+        log.info("Controller was initialized.");
     }
 
     public void startNewGame() {
-        if (startNewGameListener != null) {
-            startNewGameListener.onStartNewGame();
+        if (startNewGameAction != null) {
+            startNewGameAction.run();
         }
     }
 }
