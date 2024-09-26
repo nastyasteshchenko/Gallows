@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class View {
 
-    private final ChoosingDifficultyMenu choosingDifficultyMenu = new ChoosingDifficultyMenu();
-    private final ChoosingThemeMenu choosingThemeMenu = new ChoosingThemeMenu();
+    private final ChooseDifficultyMenu chooseDifficultyMenu = new ChooseDifficultyMenu();
+    private final ChooseThemeMenu chooseThemeMenu = new ChooseThemeMenu();
     private final GameView gameView = new GameView();
 }

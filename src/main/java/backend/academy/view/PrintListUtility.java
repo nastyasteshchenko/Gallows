@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-class PrintingListUtility {
+class PrintListUtility {
 
     private final PrintStream out = System.out;
 

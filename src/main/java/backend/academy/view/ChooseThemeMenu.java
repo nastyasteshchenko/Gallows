@@ -8,9 +8,9 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class ChoosingThemeMenu implements ChooseThemeListener {
+class ChooseThemeMenu implements ChooseThemeListener {
 
-    private static final Logger LOGGER = LogManager.getLogger(ChoosingThemeMenu.class);
+    private static final Logger LOGGER = LogManager.getLogger(ChooseThemeMenu.class);
 
     private final static String CHOOSE_THEME_MSG = "Select a theme:";
     private final static String ENTER_NUMBER_MSG =
@@ -27,7 +27,7 @@ class ChoosingThemeMenu implements ChooseThemeListener {
         LOGGER.info("Choose theme menu was opened.");
         ConsoleCleaningUtility.clearConsole();
         out.println(CHOOSE_THEME_MSG);
-        PrintingListUtility.printNumberedList(possibleThemes);
+        PrintListUtility.printNumberedList(possibleThemes);
         out.print(ENTER_NUMBER_MSG);
 
         while (true) {

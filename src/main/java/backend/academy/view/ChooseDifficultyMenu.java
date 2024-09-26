@@ -8,9 +8,9 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-class ChoosingDifficultyMenu implements ChooseDifficultyListener {
+class ChooseDifficultyMenu implements ChooseDifficultyListener {
 
-    private static final Logger LOGGER = LogManager.getLogger(ChoosingDifficultyMenu.class);
+    private static final Logger LOGGER = LogManager.getLogger(ChooseDifficultyMenu.class);
 
     private final static String CHOOSE_DIFFICULTY_MSG = "Select a difficulty:";
     private final static String ENTER_NUMBER_MSG =
@@ -27,7 +27,7 @@ class ChoosingDifficultyMenu implements ChooseDifficultyListener {
         LOGGER.info("Choose difficulty menu was opened.");
         ConsoleCleaningUtility.clearConsole();
         out.println(CHOOSE_DIFFICULTY_MSG);
-        PrintingListUtility.printNumberedList(possibleDifficulties);
+        PrintListUtility.printNumberedList(possibleDifficulties);
         out.print(ENTER_NUMBER_MSG);
 
         while (true) {

@@ -22,8 +22,8 @@ public class GameInitializer {
     }
 
     private static void setModelListener(Model model, View view) {
-        model.chooseThemeListener(view.choosingThemeMenu());
-        model.chooseDifficultyListener(view.choosingDifficultyMenu());
+        model.chooseThemeListener(view.chooseThemeMenu());
+        model.chooseDifficultyListener(view.chooseDifficultyMenu());
         model.drawGameListener(view.gameView());
         model.gameWinListener(view.gameView());
         model.gameLooseListener(view.gameView());
