@@ -3,14 +3,11 @@ package backend.academy.view.action;
 import backend.academy.view.ConsoleCleaningUtility;
 import backend.academy.view.GallowsImage;
 import backend.academy.view.GameInfo;
-import java.io.PrintStream;
 import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DrawGameAction implements Consumer<GameInfo> {
-
-    private final PrintStream out = System.out;
+public class DrawGameAction extends Action implements Consumer<GameInfo> {
 
     @Override
     public void accept(GameInfo gameInfo) {

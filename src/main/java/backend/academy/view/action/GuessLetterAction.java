@@ -1,19 +1,13 @@
 package backend.academy.view.action;
 
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
 import java.util.function.Consumer;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+@Setter
 @Slf4j
-public class GuessLetterAction implements Runnable {
+public class GuessLetterAction extends Action implements Runnable {
 
-    private final PrintStream out = System.out;
-    private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
-
-    @Setter
     private Consumer<String> enterLetterAction;
 
     @Override

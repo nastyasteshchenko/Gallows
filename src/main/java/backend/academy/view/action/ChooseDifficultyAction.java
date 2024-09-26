@@ -10,7 +10,7 @@ import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ChooseDifficultyAction implements Function<List<String>, String> {
+public class ChooseDifficultyAction extends Action implements Function<List<String>, String> {
 
     private final static String CHOOSE_DIFFICULTY_MSG = "Select a difficulty:";
     private final static String ENTER_NUMBER_MSG =
@@ -18,9 +18,6 @@ public class ChooseDifficultyAction implements Function<List<String>, String> {
     private final static String NON_NUMERIC_VALUE_MSG = "Non-numeric value entered. Try again: ";
     private final static String OUT_OF_RANGE_MSG = "Number out of range. Try again: ";
     private final static String MENU_CLOSED_MSG = "Choose theme menu was closed.";
-
-    private final PrintStream out = System.out;
-    private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
 
     @Override
     public String apply(List<String> possibleDifficulties) {

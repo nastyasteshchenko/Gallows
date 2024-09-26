@@ -3,7 +3,7 @@ package backend.academy.view.action;
 import java.io.PrintStream;
 import java.util.function.Consumer;
 
-public class ErrorAction implements Consumer<String> {
+public class ErrorAction extends Action implements Consumer<String> {
 
     private final PrintStream out = System.out;
 
