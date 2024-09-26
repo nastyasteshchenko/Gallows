@@ -16,6 +16,7 @@ final class Dictionary {
 
     private static final ObjectMapper OBJECT_MAPPER = JsonMapper.builder().build();
     private static final String DICTIONARY_FILE = "/dictionary.json";
+    public static final String GAME_WORDS_REGEX = "[a-zA-Z]+";
 
     private final SecureRandom random = new SecureRandom();
     @JsonProperty("dictionary")
@@ -55,7 +56,7 @@ final class Dictionary {
         List<String> allWords = dictionary.values().stream()
             .flatMap(map -> map.values().stream()).flatMap(List::stream).toList();
         for (String word : allWords) {
-            if (!word.matches("[a-zA-Z]+")) {
+            if (!word.matches(GAME_WORDS_REGEX)) {
                 throw UnsupportedFileContentException.unsupportedFileContentException(word);
             }
         }
