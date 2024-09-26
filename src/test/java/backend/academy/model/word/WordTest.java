@@ -33,7 +33,7 @@ class WordTest {
         Word word = new Word(str);
 
         word.guessLetter("t");
-        assertEquals("t _ _ t ", word.toString());
+        assertEquals("t _ _ t", word.toString());
     }
 
     @Test

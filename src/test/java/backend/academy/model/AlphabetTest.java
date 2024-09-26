@@ -32,12 +32,12 @@ class AlphabetTest {
     void toStringTest() {
         Alphabet alphabet = new Alphabet();
 
-        assertEquals("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ", alphabet.toString());
+        assertEquals("A B C D E F G H I J K L M N O P Q R S T U V W X Y Z", alphabet.toString());
 
         alphabet.makeLetterAsUsed("a");
-        assertEquals("B C D E F G H I J K L M N O P Q R S T U V W X Y Z ", alphabet.toString());
+        assertEquals("B C D E F G H I J K L M N O P Q R S T U V W X Y Z", alphabet.toString());
 
         alphabet.makeLetterAsUsed("Z");
-        assertEquals("B C D E F G H I J K L M N O P Q R S T U V W X Y ", alphabet.toString());
+        assertEquals("B C D E F G H I J K L M N O P Q R S T U V W X Y", alphabet.toString());
     }
 }

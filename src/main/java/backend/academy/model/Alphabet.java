@@ -2,6 +2,7 @@ package backend.academy.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Alphabet {
 
@@ -16,11 +17,9 @@ public class Alphabet {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char freeLetter : freeLetters) {
-            stringBuilder.append(freeLetter).append(' ');
-        }
-        return stringBuilder.toString();
+        return freeLetters.stream()
+            .map(String::valueOf)
+            .collect(Collectors.joining(" "));
     }
 
     public boolean isInAlphabet(String letter) {
