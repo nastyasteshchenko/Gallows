@@ -7,7 +7,6 @@ public class Alphabet {
 
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private final List<Character> freeLetters = new LinkedList<>();
-    private final StringBuilder stringBuilder = new StringBuilder();
 
     public Alphabet() {
         for (int i = 0; i < ALPHABET.length(); i++) {
@@ -17,7 +16,7 @@ public class Alphabet {
 
     @Override
     public String toString() {
-        stringBuilder.setLength(0);
+        StringBuilder stringBuilder = new StringBuilder();
         for (char freeLetter : freeLetters) {
             stringBuilder.append(freeLetter).append(' ');
         }

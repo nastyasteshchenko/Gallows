@@ -33,11 +33,10 @@ public class GameView implements DrawGameListener, GameLooseListener, GameWinLis
 
     private final PrintStream out = System.out;
     private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
-    private final StringBuilder stringBuilder = new StringBuilder();
 
     @Override
     public void onDrawGame(GameInfo gameInfo) {
-        stringBuilder.setLength(0);
+        StringBuilder stringBuilder = new StringBuilder();
         ConsoleCleaningUtility.clearConsole();
         stringBuilder.append("Theme: ").append(gameInfo.theme()).append(System.lineSeparator())
             .append("Attempts left: ").append(gameInfo.attemptsLeft()).append(System.lineSeparator());
