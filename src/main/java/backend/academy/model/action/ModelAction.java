@@ -11,10 +11,12 @@ public class ModelAction {
 
     private final EnteredLetterAction enteredLetterAction;
     private final StartNewGameAction startNewGameAction;
+    private final GuessLetterAction guessLetterAction;
 
     public ModelAction(Model model) {
         enteredLetterAction = new EnteredLetterAction(model);
         startNewGameAction = new StartNewGameAction(model);
+        guessLetterAction = new GuessLetterAction(model);
     }
 
     public void initialize(ViewAction viewAction) {
@@ -23,7 +25,8 @@ public class ModelAction {
         enteredLetterAction.drawGameAction(viewAction.drawGameAction());
         enteredLetterAction.alreadyUsedLetterAction(viewAction.alreadyUsedLetterAction());
         enteredLetterAction.notInAlphabetAction(viewAction.notInAlphabetAction());
-        enteredLetterAction.guessLetterAction(viewAction.guessLetterAction());
+        enteredLetterAction.guessLetterInViewAction(viewAction.guessLetterAction());
+        enteredLetterAction.guessLetterInModelAction(guessLetterAction);
 
         startNewGameAction.errorAction(viewAction.errorAction());
         startNewGameAction.chooseThemeAction(viewAction.chooseThemeAction());

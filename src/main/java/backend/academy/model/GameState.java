@@ -8,10 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GameState {
 
-    private static final String LETTER = "Letter ";
-
     @Getter
     private final Word word;
+    @Getter
     private final Alphabet alphabet = new Alphabet();
     private final Difficulty difficulty;
     private final String theme;
@@ -22,6 +21,10 @@ public class GameState {
         this.theme = theme;
         this.word = word;
         this.attemptsLeft = difficulty.attempts();
+    }
+
+    public void decreaseAttempts() {
+        attemptsLeft--;
     }
 
     public boolean isWin() {
@@ -38,16 +41,6 @@ public class GameState {
 
     public boolean isInAlphabet(String letter) {
         return alphabet.isInAlphabet(letter);
-    }
-
-    public void guessLetter(String letter) {
-        if (!word.guessLetter(letter)) {
-            log.debug(LETTER + letter + " is not in the word.");
-            attemptsLeft--;
-        } else {
-            log.debug(LETTER + letter + " is in the word.");
-        }
-        alphabet.makeLetterAsUsed(letter);
     }
 
     public GameInfo getGameInfo() {

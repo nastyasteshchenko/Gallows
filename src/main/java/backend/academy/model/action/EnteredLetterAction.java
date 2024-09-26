@@ -15,11 +15,12 @@ public class EnteredLetterAction implements Consumer<String> {
     private static final String LETTER_STR = "Letter ";
 
     private Consumer<String> gameLooseAction;
+    private Consumer<String> guessLetterInModelAction;
     private Consumer<GameInfo> drawGameAction;
     private Runnable notInAlphabetAction;
     private Runnable alreadyUsedLetterAction;
     private Runnable gameWinAction;
-    private Runnable guessLetterAction;
+    private Runnable guessLetterInViewAction;
 
     public EnteredLetterAction(Model model) {
         this.model = model;
@@ -44,7 +45,7 @@ public class EnteredLetterAction implements Consumer<String> {
         if (!shouldContinue) {
             return;
         }
-        model.currentGameState().guessLetter(letter);
+        guessLetterInModelAction.accept(letter);
         if (drawGameAction != null) {
             drawGameAction.accept(model.currentGameState().getGameInfo());
         }
@@ -61,8 +62,8 @@ public class EnteredLetterAction implements Consumer<String> {
             }
             shouldContinue = false;
         }
-        if (guessLetterAction != null && shouldContinue) {
-            guessLetterAction.run();
+        if (guessLetterInViewAction != null && shouldContinue) {
+            guessLetterInViewAction.run();
         }
     }
 }
