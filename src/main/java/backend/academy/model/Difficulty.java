@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-enum Difficulty {
+public enum Difficulty {
 
     @JsonProperty("easy")
     EASY(8),
@@ -23,15 +23,17 @@ enum Difficulty {
         this.attempts = attempts;
     }
 
-    static List<String> getAllDifficulties() {
-        return Arrays.stream(Difficulty.values()).map(Enum::name).map(String::toLowerCase).toList();
+    public static List<String> getAllDifficulties() {
+        return Arrays.stream(Difficulty.values())
+            .map(difficulty -> difficulty.name().toLowerCase())
+            .toList();
     }
 
-    static Difficulty getByName(String name) {
+    public static Difficulty getByName(String name) {
         return Difficulty.valueOf(name.toUpperCase());
     }
 
-    static Difficulty getRandomDifficulty() {
+    public static Difficulty getRandomDifficulty() {
         return Difficulty.values()[RANDOM.nextInt(Difficulty.values().length)];
     }
 }
