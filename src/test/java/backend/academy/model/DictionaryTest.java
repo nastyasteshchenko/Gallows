@@ -1,8 +1,8 @@
 package backend.academy.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
@@ -32,10 +32,9 @@ class DictionaryTest {
         }
     }
 
+    @AllArgsConstructor
     @Getter
     private static class TmpDictionary {
-
-        @JsonProperty("dictionary")
         private HashMap<String, HashMap<Difficulty, List<String>>> dictionary;
     }
 }
