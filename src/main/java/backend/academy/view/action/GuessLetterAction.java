@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GuessLetterAction  {
+public class GuessLetterAction implements Runnable {
 
     private final PrintStream out = System.out;
     private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
@@ -16,7 +16,8 @@ public class GuessLetterAction  {
     @Setter
     private Consumer<String> enterLetterAction;
 
-    public void performAction() {
+    @Override
+    public void run() {
         log.info("Guess letter menu was opened.");
         out.print("Guess a letter: ");
         while (true) {

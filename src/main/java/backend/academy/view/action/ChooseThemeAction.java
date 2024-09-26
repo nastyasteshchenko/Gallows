@@ -6,10 +6,12 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ChooseThemeAction {
+public class ChooseThemeAction implements Function<List<String>, String> {
 
     private final static String CHOOSE_THEME_MSG = "Select a theme:";
     private final static String ENTER_NUMBER_MSG =
@@ -21,7 +23,8 @@ public class ChooseThemeAction {
     private final PrintStream out = System.out;
     private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
 
-    public String performAction(List<String> possibleThemes) {
+    @Override
+    public String apply(List<String> possibleThemes) {
         log.info("Choose theme menu was opened.");
         ConsoleCleaningUtility.clearConsole();
         out.println(CHOOSE_THEME_MSG);

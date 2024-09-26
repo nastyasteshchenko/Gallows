@@ -6,10 +6,11 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ChooseDifficultyAction {
+public class ChooseDifficultyAction implements Function<List<String>, String> {
 
     private final static String CHOOSE_DIFFICULTY_MSG = "Select a difficulty:";
     private final static String ENTER_NUMBER_MSG =
@@ -21,7 +22,8 @@ public class ChooseDifficultyAction {
     private final PrintStream out = System.out;
     private final Scanner in = new Scanner(System.in, StandardCharsets.UTF_8);
 
-    public String performAction(List<String> possibleDifficulties) {
+    @Override
+    public String apply(List<String> possibleDifficulties) {
         log.info("Choose difficulty menu was opened.");
         ConsoleCleaningUtility.clearConsole();
         out.println(CHOOSE_DIFFICULTY_MSG);

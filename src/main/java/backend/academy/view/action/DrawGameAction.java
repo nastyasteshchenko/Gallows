@@ -4,14 +4,16 @@ import backend.academy.view.ConsoleCleaningUtility;
 import backend.academy.view.GallowsImage;
 import backend.academy.view.GameInfo;
 import java.io.PrintStream;
+import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DrawGameAction {
+public class DrawGameAction implements Consumer<GameInfo> {
 
     private final PrintStream out = System.out;
 
-    public void performAction(GameInfo gameInfo) {
+    @Override
+    public void accept(GameInfo gameInfo) {
         StringBuilder stringBuilder = new StringBuilder();
         ConsoleCleaningUtility.clearConsole();
         stringBuilder.append("Theme: ").append(gameInfo.theme()).append(System.lineSeparator())

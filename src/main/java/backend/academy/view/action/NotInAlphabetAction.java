@@ -3,7 +3,7 @@ package backend.academy.view.action;
 import java.io.PrintStream;
 import lombok.Setter;
 
-public class NotInAlphabetAction {
+public class NotInAlphabetAction implements Runnable {
 
     private static final String NOT_IN_ALPHABET_MSG = "This letter is not in the alphabet. Try again.";
 
@@ -12,7 +12,8 @@ public class NotInAlphabetAction {
     @Setter
     private Runnable guessLetterAction;
 
-    public void performAction() {
+    @Override
+    public void run() {
         out.println(NOT_IN_ALPHABET_MSG);
         if (guessLetterAction != null) {
             guessLetterAction.run();

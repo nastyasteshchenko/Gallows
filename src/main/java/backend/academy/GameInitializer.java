@@ -15,7 +15,7 @@ public class GameInitializer {
 
         viewAction.initialize(modelAction);
         modelAction.initialize(viewAction);
-        controller.initialize(modelAction.startNewGameAction()::performAction);
+        controller.initialize(modelAction.startNewGameAction());
 
         return controller;
     }

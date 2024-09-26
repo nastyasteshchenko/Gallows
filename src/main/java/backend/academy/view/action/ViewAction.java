@@ -18,10 +18,10 @@ public class ViewAction {
     private final ChooseDifficultyAction chooseDifficultyAction = new ChooseDifficultyAction();
 
     public void initialize(ModelAction modelAction) {
-        gameOverAction.startNewGameAction(modelAction.startNewGameAction()::performAction);
-        alreadyUsedLetterAction.guessLetterAction(guessLetterAction::performAction);
-        notInAlphabetAction.guessLetterAction(guessLetterAction::performAction);
-        guessLetterAction.enterLetterAction(modelAction.enteredLetterAction()::performAction);
+        gameOverAction.startNewGameAction(modelAction.startNewGameAction());
+        alreadyUsedLetterAction.guessLetterAction(guessLetterAction);
+        notInAlphabetAction.guessLetterAction(guessLetterAction);
+        guessLetterAction.enterLetterAction(modelAction.enteredLetterAction());
         log.info("ViewAction was initialized.");
     }
 }

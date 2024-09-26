@@ -18,18 +18,18 @@ public class ModelAction {
     }
 
     public void initialize(ViewAction viewAction) {
-        enteredLetterAction.gameLooseAction(viewAction.gameOverAction()::performGameLooseAction);
-        enteredLetterAction.gameWinAction(viewAction.gameOverAction()::performGameWinAction);
-        enteredLetterAction.drawGameAction(viewAction.drawGameAction()::performAction);
-        enteredLetterAction.alreadyUsedLetterAction(viewAction.alreadyUsedLetterAction()::performAction);
-        enteredLetterAction.notInAlphabetAction(viewAction.notInAlphabetAction()::performAction);
-        enteredLetterAction.guessLetterAction(viewAction.guessLetterAction()::performAction);
+        enteredLetterAction.gameLooseAction(viewAction.gameOverAction());
+        enteredLetterAction.gameWinAction(viewAction.gameOverAction());
+        enteredLetterAction.drawGameAction(viewAction.drawGameAction());
+        enteredLetterAction.alreadyUsedLetterAction(viewAction.alreadyUsedLetterAction());
+        enteredLetterAction.notInAlphabetAction(viewAction.notInAlphabetAction());
+        enteredLetterAction.guessLetterAction(viewAction.guessLetterAction());
 
-        startNewGameAction.errorAction(viewAction.errorAction()::performAction);
-        startNewGameAction.chooseThemeAction(viewAction.chooseThemeAction()::performAction);
-        startNewGameAction.chooseDifficultyAction(viewAction.chooseDifficultyAction()::performAction);
-        startNewGameAction.guessLetterAction(viewAction.guessLetterAction()::performAction);
-        startNewGameAction.drawGameAction(viewAction.drawGameAction()::performAction);
+        startNewGameAction.errorAction(viewAction.errorAction());
+        startNewGameAction.chooseThemeAction(viewAction.chooseThemeAction());
+        startNewGameAction.chooseDifficultyAction(viewAction.chooseDifficultyAction());
+        startNewGameAction.guessLetterAction(viewAction.guessLetterAction());
+        startNewGameAction.drawGameAction(viewAction.drawGameAction());
         log.info("GameAction was initialized.");
     }
 }

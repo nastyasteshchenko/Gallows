@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Setter
-public class StartNewGameAction {
+public class StartNewGameAction implements Runnable {
 
     private static final String DICTIONARY_ERROR_MSG = "Failed to load dictionary.";
 
@@ -30,7 +30,8 @@ public class StartNewGameAction {
         this.model = model;
     }
 
-    public void performAction() {
+    @Override
+    public void run() {
         log.info("Starting new game.");
         if (model.dictionary() == null) {
             model.dictionary(Dictionary.loadDictionary());

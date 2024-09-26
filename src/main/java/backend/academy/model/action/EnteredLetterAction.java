@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Setter
-public class EnteredLetterAction {
+public class EnteredLetterAction implements Consumer<String> {
 
     private final Model model;
 
@@ -25,7 +25,8 @@ public class EnteredLetterAction {
         this.model = model;
     }
 
-    public void performAction(String letter) {
+    @Override
+    public void accept(String letter) {
         boolean shouldContinue = true;
         if (!model.currentGameState().isInAlphabet(letter)) {
             if (notInAlphabetAction != null) {
