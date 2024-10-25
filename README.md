@@ -1,6 +1,6 @@
 # Описание для проекта  
 
-[Test_description.pdf](./Test_descrioption.pdf)  
+[Test_description.pdf](./Test_description.pdf)  
 
 # Шаблон Java-проекта для домашних заданий
 
